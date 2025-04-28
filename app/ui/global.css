@@ -3,11 +3,12 @@
 @tailwind utilities;
 
 :root {
-  --yellow: #FAC302;
-  --dark-green: #003844;
-  --white: #EBF2FA;
+  --black: #1e1e1e;
+  --blue: #00bcd4;
+  --white: #f5f5f5;
   --orange: #ff6b35;
-  --jade: #57A773;
+  --purple: #624CAB;
+  --lightpurple: #7e55b4;
 }
 
 input[type='number'] {
