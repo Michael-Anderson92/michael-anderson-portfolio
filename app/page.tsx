@@ -8,6 +8,7 @@ import '@fontsource/roboto/700.css';
 import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import VerticalLinearStepper from '@/components/VerticalLinearStepper';
+import ResponsiveNav from '@/components/ResponsiveNav';
 
 const theme = createTheme({
   palette: {
@@ -104,6 +105,7 @@ export default function Page() {
               "Thanks for stopping by!"
             </h1>
           </section>
+          <ResponsiveNav />
 
           <section className="p-2">
             <VerticalLinearStepper />
