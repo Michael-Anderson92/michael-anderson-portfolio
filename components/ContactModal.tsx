@@ -11,14 +11,14 @@ import { useForm, ValidationError } from '@formspree/react';
 const mainStyle = {
   position: 'absolute' as const,
   top: '50%',
-  left: '48%',
+  left: '50%',
   transform: 'translate(-50%, -50%)',
   bgcolor: 'var(--black)', // Custom background color
   color: 'var(--white)', // Custom text color
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  height: '90vh', // Full height for the modal
+  height: '75vh', // Full height for the modal
   width: '90vw', // Full width for the modal
   maxWidth: '100vw', // Prevent overflow
   outline: 'none',
