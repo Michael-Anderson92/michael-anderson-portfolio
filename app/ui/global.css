@@ -6,9 +6,8 @@
   --black: #1e1e1e;
   --blue: #00bcd4;
   --white: #f5f5f5;
-  --orange: #ff6b35;
   --purple: #624CAB;
-  --lightpurple: #7e55b4;
+  --gray: #616161;
 }
 
 input[type='number'] {
