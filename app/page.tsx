@@ -58,54 +58,62 @@ export default function Page() {
           backgroundColor: 'var(--black)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          
         }}
       >
         <main className="flex-grow flex flex-col p-6">
-          <header>
-            <h1
-              className="text-3xl text-center"
-              style={{
-                color: 'var(--blue)',
-                lineHeight: '64px',
-              }}
-            >
-              Michael Anderson
-            </h1>
-            <h3
-              className="text-2xl text-center"
-              style={{
-                color: 'var(--white)',
-                marginBottom: '2vh',
-              }}
-            >
-              Full Stack Web Developer
-            </h3>
-            <nav className="flex justify-center gap-6 py-2 mx-auto">
-              {socialLinks.map(({ href, label, svg }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="transition-colors duration-200"
-                style={{
-                color: 'var(--white)',
-              }}
-              >
-              {svg}
-              </a>
-            ))}
-            </nav>
-
-          </header>
-
-          <section className="my-4">
+        <header
+  style={{
+    position: 'sticky', // Set sticky positioning
+    top: '0', // Sticks to the top of the viewport
+    zIndex: '10', // Ensures it stays above other elements
+    backgroundColor: 'var(--black)', // Keeps the background consistent as it scrolls
+  }}
+>
+  <h1
+    className="text-3xl text-center"
+    style={{
+      color: 'var(--blue)',
+      lineHeight: '64px',
+    }}
+  >
+    Michael Anderson
+  </h1>
+  <h3
+    className="text-2xl text-center"
+    style={{
+      color: 'var(--white)',
+      marginBottom: '2vh',
+    }}
+  >
+    Full Stack Web Developer
+  </h3>
+  <nav className="flex justify-center gap-6 py-2 mx-auto">
+    {socialLinks.map(({ href, label, svg }) => (
+      <a
+        key={label}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        className="transition-colors duration-200"
+        style={{
+          color: 'var(--white)',
+        }}
+      >
+        {svg}
+      </a>
+    ))}
+  </nav>
+  <section className="my-4">
             <h1 className="text-center text-white italic">
               "Thanks for stopping by!"
             </h1>
           </section>
           <ResponsiveNav />
+</header>
+
+          
 
           <section className="p-2">
             <VerticalLinearStepper />
