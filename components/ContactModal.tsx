@@ -9,7 +9,7 @@ import { useForm, ValidationError } from '@formspree/react';
 
 // Main Modal Style
 const mainStyle = {
-  position: 'absolute' as const,
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -18,8 +18,8 @@ const mainStyle = {
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  height: '75vh', // Full height for the modal
-  width: '90vw', // Full width for the modal
+  height: '100vh', // Full height for the modal
+  width: '100vw', // Full width for the modal
   maxWidth: '100vw', // Prevent overflow
   outline: 'none',
   display: 'flex', // Use flexbox for alignment
@@ -29,7 +29,7 @@ const mainStyle = {
 };
 
 const warningStyle = {
-  position: 'absolute' as const,
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -78,6 +78,9 @@ export default function ContactModal() {
           width: '20vw',
           marginX: '2vw',
           fontSize: '.8rem',
+          color: '#00bcd4',
+          bgcolor: 'var(--black)',
+          border: '2px solid #00bcd4',
         }}
         variant="contained"
         onClick={handleOpen}
@@ -101,8 +104,8 @@ export default function ContactModal() {
             component="h2"
             sx={{
               textAlign: 'center',
-              marginTop: '8%',
-              marginBottom: '2rem',
+              marginTop: '2%',
+              marginBottom: '1rem',
             }}
           >
             Thanks for contacting me!
@@ -166,13 +169,14 @@ export default function ContactModal() {
                 required
                 style={{
                   width: '100%',
-                  height: '40vh',
+                  height: '50vh',
                   overflow: 'auto',
                   padding: '0.5rem',
                   border: '1px solid var(--gray)',
                   borderRadius: '4px',
                   backgroundColor: 'var(--black)',
                   color: 'var(--white)',
+                  resize: 'none', // Prevent resizing
                 }}
               />
               <ValidationError prefix="Message" field="message" errors={state.errors} />

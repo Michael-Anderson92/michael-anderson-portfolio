@@ -33,6 +33,9 @@ export default function ProjectsModal() {
         width: '20vw',
         marginX: '2vw',
         fontSize: '.8rem',
+        color: '#00bcd4',
+        bgcolor: 'var(--black)',
+        border: '2px solid #00bcd4',
       }}
       variant="contained" 
       onClick={handleOpen}>

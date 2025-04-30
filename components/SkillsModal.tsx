@@ -11,7 +11,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  bgcolor: '#00bcd4',
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
@@ -33,6 +33,9 @@ export default function SkillsModal() {
         width: '20vw',
         marginX: '2vw',
         fontSize: '.8rem',
+        color: '#00bcd4',
+        bgcolor: 'var(--black)',
+        border: '2px solid #00bcd4',
       }}
       variant="contained" 
       onClick={handleOpen}>

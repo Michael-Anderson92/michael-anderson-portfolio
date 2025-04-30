@@ -61,13 +61,15 @@ export default function Page() {
           
         }}
       >
-        <main className="flex-grow flex flex-col p-6">
+        <main className="flex-grow flex flex-col">
         <header
   style={{
     position: 'sticky', // Set sticky positioning
     top: '0', // Sticks to the top of the viewport
     zIndex: '10', // Ensures it stays above other elements
     backgroundColor: 'var(--black)', // Keeps the background consistent as it scrolls
+    width: '100%',
+
   }}
 >
   <h1
@@ -83,12 +85,12 @@ export default function Page() {
     className="text-2xl text-center"
     style={{
       color: 'var(--white)',
-      marginBottom: '2vh',
+      marginBottom: '1vh',
     }}
   >
     Full Stack Web Developer
   </h3>
-  <nav className="flex justify-center gap-6 py-2 mx-auto">
+  <nav className="flex justify-center gap-6 my-4 mx-auto">
     {socialLinks.map(({ href, label, svg }) => (
       <a
         key={label}

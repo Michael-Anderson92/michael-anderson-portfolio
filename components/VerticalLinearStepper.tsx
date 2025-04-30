@@ -72,7 +72,7 @@ export default function VerticalLinearStepper() {
   React.useEffect(() => {
     const onScroll = () => {
       if (!stepTops.length) return;
-      const scrollY = window.scrollY + window.innerHeight / 4; // Trigger a bit before center
+      const scrollY = window.scrollY + window.innerHeight / 1.5; // Trigger a bit before center
       let newActive = 0;
       for (let i = 0; i < stepTops.length; i++) {
         if (scrollY >= stepTops[i]) {
