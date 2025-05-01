@@ -5,9 +5,10 @@ import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { SxProps, Theme } from '@mui/material/styles';
 
 // Main Modal Style
-const mainStyle = {
+const mainStyle: SxProps<Theme> = {
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -30,7 +31,7 @@ const mainStyle = {
 };
 
 // Responsive Project Container Style
-const projectContainerStyle = {
+const projectContainerStyle: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
   gap: '2.5rem', // Increased for better separation
@@ -40,7 +41,7 @@ const projectContainerStyle = {
 };
 
 // Project Item Style (Base)
-const projectItemStyle = {
+const projectItemStyle: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
@@ -60,7 +61,7 @@ const projectItemStyle = {
 };
 
 // Image Style
-const imageStyle = {
+const imageStyle: SxProps<Theme> = {
   width: '300px',
   height: '300px',
   objectFit: 'cover',
@@ -75,7 +76,7 @@ const imageStyle = {
 };
 
 // Text Container Style
-const textContainerStyle = {
+const textContainerStyle: SxProps<Theme> = {
   display: 'flex',
   flexDirection: 'column',
   gap: '0.75rem',
@@ -85,7 +86,7 @@ const textContainerStyle = {
 };
 
 // Responsive styles for larger screens
-const responsiveStyles = {
+const responsiveStyles: { [key: string]: SxProps<Theme> } = {
   '@media (min-width: 768px)': {
     projectContainerStyle: {
       ...projectContainerStyle,
@@ -113,29 +114,29 @@ const responsiveStyles = {
 };
 
 // Combine styles
-const combinedProjectContainerStyle = {
+const combinedProjectContainerStyle: SxProps<Theme> = {
   ...projectContainerStyle,
   '@media (min-width: 768px)': responsiveStyles['@media (min-width: 768px)'].projectContainerStyle,
 };
 
-const combinedProjectItemStyle = {
+const combinedProjectItemStyle: SxProps<Theme> = {
   ...projectItemStyle,
   '@media (min-width: 768px)': responsiveStyles['@media (min-width: 768px)'].projectItemStyle,
 };
 
-const combinedImageStyle = {
+const combinedImageStyle: SxProps<Theme> = {
   ...imageStyle,
   '@media (min-width: 768px)': responsiveStyles['@media (min-width: 768px)'].imageStyle,
 };
 
 export default function ProjectsModal() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Fallback image handler
-  const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+  // Fallback image handler with proper typing
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
   };
 
   return (
@@ -212,36 +213,37 @@ export default function ProjectsModal() {
                   An ongoing e-commerce platform for purchasing specialty treats, featuring advanced search and filtering capabilities and virtual shop functionality. Built with Next.js, Material-UI, Tailwind CSS, TypeScript, and Supabase (PostgreSQL).
                 </Typography>
                 <a
-                href="https://candybar-ecommerce-application.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                  href="https://candybar-ecommerce-application.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    sx={{
+                      bgcolor: 'var(--blue)', // #00bcd4
+                      color: 'var(--white)', // #f5f5f5
+                      padding: '0.5rem 1rem',
+                      fontSize: '.8rem',
+                      fontWeight: 600,
+                      border: '2px solid var(--white)', // #f5f5f5
+                      borderRadius: '8px',
+                      mt: 1,
+                      transition: 'background-color 0.3s, color 0.3s',
+                      '&:hover': {
+                        bgcolor: 'var(--white)', // #f5f5f5
+                        color: 'var(--blue)', // #00bcd4
+                        borderColor: 'var(--blue)',
+                      },
+                    }}
+                    aria-label="View CandyBar E-Commerce Platform"
+                  >
+                    View
+                  </Button>
+                </a>
               </Box>
               <img
                 src="./backgrounds/candybar-app-screenshot1.png"
                 alt="CandyBar E-Commerce Platform"
-                style={combinedImageStyle}
+                style={combinedImageStyle as React.CSSProperties}
                 onError={handleImageError}
               />
             </Box>
@@ -278,36 +280,37 @@ export default function ProjectsModal() {
                   A forum-style dashboard enabling developers to create forums, posts, and comments. Developed as my third project during General Assembly’s Full Stack Bootcamp, showcasing expertise in the MERN stack (MongoDB, Express.js, React, Node.js).
                 </Typography>
                 <a
-                href="https://gitcentral.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                  href="https://gitcentral.netlify.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    sx={{
+                      bgcolor: 'var(--blue)', // #00bcd4
+                      color: 'var(--white)', // #f5f5f5
+                      padding: '0.5rem 1rem',
+                      fontSize: '.8rem',
+                      fontWeight: 600,
+                      border: '2px solid var(--white)', // #f5f5f5
+                      borderRadius: '8px',
+                      mt: 1,
+                      transition: 'background-color 0.3s, color 0.3s',
+                      '&:hover': {
+                        bgcolor: 'var(--white)', // #f5f5f5
+                        color: 'var(--blue)', // #00bcd4
+                        borderColor: 'var(--blue)',
+                      },
+                    }}
+                    aria-label="View GitCentral Developer Forum"
+                  >
+                    View
+                  </Button>
+                </a>
               </Box>
               <img
                 src="./backgrounds/gitcentral-screenshot1.png"
                 alt="GitCentral Developer Forum"
-                style={combinedImageStyle}
+                style={combinedImageStyle as React.CSSProperties}
                 onError={handleImageError}
               />
             </Box>
@@ -344,36 +347,37 @@ export default function ProjectsModal() {
                   A CRUD application for tracking health metrics, with a focus on medication management. Built with EJS, MongoDB, Mongoose, and Express.js during my time at General Assembly.
                 </Typography>
                 <a
-                href="https://health-nut-1c88ef5e7455.herokuapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                  href="https://health-nut-1c88ef5e7455.herokuapp.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Button
+                    sx={{
+                      bgcolor: 'var(--blue)', // #00bcd4
+                      color: 'var(--white)', // #f5f5f5
+                      padding: '0.5rem 1rem',
+                      fontSize: '.8rem',
+                      fontWeight: 600,
+                      border: '2px solid var(--white)', // #f5f5f5
+                      borderRadius: '8px',
+                      mt: 1,
+                      transition: 'background-color 0.3s, color 0.3s',
+                      '&:hover': {
+                        bgcolor: 'var(--white)', // #f5f5f5
+                        color: 'var(--blue)', // #00bcd4
+                        borderColor: 'var(--blue)',
+                      },
+                    }}
+                    aria-label="View Health Nut Metrics Tracker"
+                  >
+                    View
+                  </Button>
+                </a>
               </Box>
               <img
                 src="./backgrounds/health-nut-screenshot1.png"
                 alt="Health Nut Metrics Tracker"
-                style={combinedImageStyle}
+                style={combinedImageStyle as React.CSSProperties}
                 onError={handleImageError}
               />
             </Box>
