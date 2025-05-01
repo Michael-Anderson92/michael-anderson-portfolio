@@ -120,6 +120,10 @@ export default function Page() {
           <section className="p-2">
             <VerticalLinearStepper />
           </section>
+          <p className="text-center mb-8"
+          style={{
+            color: 'var(--white)',
+          }}>© 2025 Michael Anderson. All rights reserved.</p>
         </main>
       </div>
     </ThemeProvider>
