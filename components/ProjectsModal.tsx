@@ -7,6 +7,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { SxProps, Theme } from '@mui/material/styles';
 
+// Define type for responsive styles to avoid null errors
+interface ResponsiveStyles {
+  '@media (min-width: 768px)': {
+    projectContainerStyle: SxProps<Theme>;
+    projectItemStyle: SxProps<Theme>;
+    imageStyle: SxProps<Theme>;
+  };
+}
+
 // Main Modal Style
 const mainStyle: SxProps<Theme> = {
   position: 'absolute',
@@ -86,7 +95,7 @@ const textContainerStyle: SxProps<Theme> = {
 };
 
 // Responsive styles for larger screens
-const responsiveStyles: { [key: string]: SxProps<Theme> } = {
+const responsiveStyles: ResponsiveStyles = {
   '@media (min-width: 768px)': {
     projectContainerStyle: {
       ...projectContainerStyle,
@@ -130,12 +139,12 @@ const combinedImageStyle: SxProps<Theme> = {
 };
 
 export default function ProjectsModal() {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Fallback image handler with proper typing
-  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+  // Fallback image handler with explicit type
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
     e.currentTarget.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
   };
 
@@ -243,7 +252,7 @@ export default function ProjectsModal() {
               <img
                 src="./backgrounds/candybar-app-screenshot1.png"
                 alt="CandyBar E-Commerce Platform"
-                style={combinedImageStyle as React.CSSProperties}
+                style={combinedImageStyle}
                 onError={handleImageError}
               />
             </Box>
@@ -310,7 +319,7 @@ export default function ProjectsModal() {
               <img
                 src="./backgrounds/gitcentral-screenshot1.png"
                 alt="GitCentral Developer Forum"
-                style={combinedImageStyle as React.CSSProperties}
+                style={combinedImageStyle}
                 onError={handleImageError}
               />
             </Box>
@@ -347,7 +356,7 @@ export default function ProjectsModal() {
                   A CRUD application for tracking health metrics, with a focus on medication management. Built with EJS, MongoDB, Mongoose, and Express.js during my time at General Assembly.
                 </Typography>
                 <a
-                  href="https://health-nut-1c88ef5e7455.herokuapp.com"
+                  href="https://health-nut-1c88ef5e7455.herokuapp.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -377,7 +386,7 @@ export default function ProjectsModal() {
               <img
                 src="./backgrounds/health-nut-screenshot1.png"
                 alt="Health Nut Metrics Tracker"
-                style={combinedImageStyle as React.CSSProperties}
+                style={combinedImageStyle}
                 onError={handleImageError}
               />
             </Box>
@@ -408,3 +417,4 @@ export default function ProjectsModal() {
     </div>
   );
 }
+```
