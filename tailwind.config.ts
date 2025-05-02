@@ -19,9 +19,12 @@ const config: Config = {
         },
         yellow: '#FAC302',
         darkGreen: '#003844',
-        white: '#EBF2FA',
+        white: '#f5f5f5',
         orange: '#ff6b35',
         jade: '#57A773',
+        'custom-white': '',
+        'custom-black': '',
+        'custom-blue': '',
       },
     },
     keyframes: {

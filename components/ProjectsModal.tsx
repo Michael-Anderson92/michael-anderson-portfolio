@@ -15,8 +15,8 @@ const mainStyle = {
   bgcolor: 'var(--black)', // #1e1e1e
   color: 'var(--white)', // #f5f5f5
   border: '2px solid var(--blue)', // #00bcd4 border
-  borderRadius: '12px', // Softer corners
-  boxShadow: '0 8px 32px rgba(0, 188, 212, 0.2)', // Subtle blue shadow
+  borderRadius: '12px',
+  boxShadow: '0 8px 32px rgba(0, 188, 212, 0.2)',
   p: 5,
   height: '100vh',
   width: '100vw',
@@ -29,48 +29,63 @@ const mainStyle = {
   overflowY: 'auto',
 };
 
-// Responsive Project Container Style
+// Project Container Style
 const projectContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
-  gap: '2.5rem', // Increased for better separation
+  gap: '2.5rem',
   width: '90%',
   maxWidth: '1200px',
   margin: '0 auto',
+  '@media (min-width: 768px)': {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: '2rem',
+  },
 };
 
-// Project Item Style (Base)
+// Project Item Style
 const projectItemStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'space-between', // Distribute content evenly
   width: '100%',
-  bgcolor: 'var(--black)', // Card background
+  minHeight: '400px', // Ensure all cards have the same minimum height
+  bgcolor: 'var(--black)',
   border: '1px solid var(--blue)', // #00bcd4 border
   borderRadius: '10px',
   p: 3,
-  boxShadow: '0 4px 16px rgba(0, 188, 212, 0.15)', // Subtle shadow
+  boxShadow: '0 4px 16px rgba(0, 188, 212, 0.15)',
   transition: 'transform 0.3s, box-shadow 0.3s',
   '&:hover': {
     transform: 'translateY(-4px)',
     boxShadow: '0 6px 24px rgba(0, 188, 212, 0.25)',
   },
+  '@media (min-width: 768px)': {
+    width: '33%',
+    maxWidth: '380px',
+    flex: '1 1 0', // Ensure equal sizing in row layout
+  },
 };
 
 // Image Style
 const imageStyle = {
-  width: '300px',
-  height: '300px',
+  width: '200px',
+  height: '200px',
   objectFit: 'cover',
   borderRadius: '8px',
   border: '2px solid var(--blue)', // #00bcd4 border
   flexShrink: 0,
-  transition: 'border-color 0.3s, transform 0.3s',
-  '&:hover': {
-    borderColor: 'var(--white)', // #f5f5f5 on hover
-    transform: 'scale(1.08)',
+  '@media (min-width: 768px)': {
+    width: '150px',
+    height: '150px',
+    border: '3px solid var(--blue)',
+    '&:hover': {
+      borderColor: 'var(--white)',
+      transform: 'scale(1.08)',
+    },
   },
 };
 
@@ -81,49 +96,17 @@ const textContainerStyle = {
   gap: '0.75rem',
   textAlign: 'center',
   width: '100%',
-  px: 2, // Added padding for text breathing room
+  px: 2,
+  flexGrow: 1, // Allow text container to expand to fill space
 };
 
-// Responsive styles for larger screens
-const responsiveStyles = {
-  '@media (min-width: 768px)': {
-    projectContainerStyle: {
-      ...projectContainerStyle,
-      flexDirection: 'row',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      gap: '3rem', // Larger gap on desktop
-    },
-    projectItemStyle: {
-      ...projectItemStyle,
-      width: '45%',
-      maxWidth: '500px',
-    },
-    imageStyle: {
-      ...imageStyle,
-      width: '150px',
-      height: '150px',
-      border: '3px solid var(--blue)', // Thicker border on desktop
-      '&:hover': {
-        borderColor: 'var(--white)',
-        transform: 'scale(1.08)',
-      },
-    },
-  },
+// Image Wrapper Style to Ensure Centering
+const imageWrapperStyle = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
 };
-
-// Combine styles
-const combinedProjectContainerStyle = {
-  ...projectContainerStyle,
-  '@media (min-width: 768px)': responsiveStyles['@media (min-width: 768px)'].projectContainerStyle,
-};
-
-const combinedProjectItemStyle = {
-  ...projectItemStyle,
-  '@media (min-width: 768px)': responsiveStyles['@media (min-width: 768px)'].projectItemStyle,
-};
-
-
 
 export default function ProjectsModal() {
   const [open, setOpen] = useState(false);
@@ -154,7 +137,7 @@ export default function ProjectsModal() {
         aria-describedby="modal-modal-description"
         closeAfterTransition
         BackdropProps={{
-          style: { backgroundColor: 'rgba(30, 30, 30, 0.85)' }, // Slightly darker backdrop
+          style: { backgroundColor: 'rgba(30, 30, 30, 0.85)' },
         }}
       >
         <Box sx={mainStyle}>
@@ -166,218 +149,320 @@ export default function ProjectsModal() {
               textAlign: 'center',
               marginBottom: '1.5rem',
               fontWeight: 700,
-              textShadow: '0 2px 4px rgba(0, 188, 212, 0.3)', // Subtle blue shadow
+              textShadow: '0 2px 4px rgba(0, 188, 212, 0.3)',
             }}
           >
             My Projects
           </Typography>
-          <Box sx={combinedProjectContainerStyle}>
+          <Box sx={projectContainerStyle}>
             {/* Project 1 */}
-            <Box sx={combinedProjectItemStyle}>
+            <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
                   variant="h6"
                   component="h3"
                   sx={{
                     fontWeight: 600,
-                    color: 'var(--blue)', // #00bcd4
+                    color: 'var(--blue)',
                     position: 'relative',
                     pb: 1,
                     '&:after': {
                       content: '""',
                       position: 'absolute',
-                      bottom: 0,
+                      bottom: '0',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       width: '50px',
                       height: '2px',
-                      bgcolor: 'var(--white)', // #f5f5f5
+                      bgcolor: 'var(--white)',
                     },
                   }}
                 >
-                  CandyBar E-Commerce Platform
+                  CandyBar E-Commerce App
                 </Typography>
+                <Box sx={imageWrapperStyle}>
+                  <Box
+                    component="img"
+                    src="./backgrounds/candybar-app-screenshot1.png"
+                    alt="CandyBar E-Commerce Platform"
+                    sx={imageStyle}
+                  />
+                </Box>
                 <Typography
                   variant="body2"
                   sx={{ fontSize: '0.95rem', lineHeight: 1.6 }}
                 >
-                  An ongoing e-commerce platform for purchasing specialty treats, featuring advanced search and filtering capabilities and virtual shop functionality. Built with Next.js, Material-UI, Tailwind CSS, TypeScript, and Supabase (PostgreSQL).
+                  An ongoing e-commerce mobile app for purchasing specialty treats, featuring advanced search and filtering capabilities and virtual shop functionality.
                 </Typography>
-                <a
-                href="https://candybar-ecommerce-application.vercel.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="https://candybar-ecommerce-application.vercel.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View CandyBar E-Commerce Platform"
+                    >
+                      App
+                    </Button>
+                  </a>
+                  <a
+                    href="https://github.com/Michael-Anderson92/candybar-ecommerce-application"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View Github Link"
+                    >
+                      GitHub
+                    </Button>
+                  </a>
+                </div>
               </Box>
-              <img
-                src="./backgrounds/candybar-app-screenshot1.png"
-                alt="CandyBar E-Commerce Platform"
-              />
             </Box>
 
             {/* Project 2 */}
-            <Box sx={combinedProjectItemStyle}>
+            <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
                   variant="h6"
                   component="h3"
                   sx={{
                     fontWeight: 600,
-                    color: 'var(--blue)', // #00bcd4
+                    color: 'var(--blue)',
                     position: 'relative',
                     pb: 1,
                     '&:after': {
                       content: '""',
                       position: 'absolute',
-                      bottom: 0,
+                      bottom: '0',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       width: '50px',
                       height: '2px',
-                      bgcolor: 'var(--white)', // #f5f5f5
+                      bgcolor: 'var(--white)',
                     },
                   }}
                 >
                   GitCentral Developer Forum
                 </Typography>
+                <Box sx={imageWrapperStyle}>
+                  <Box
+                    component="img"
+                    src="./backgrounds/gitcentral-screenshot1.png"
+                    alt="GitCentral Developer Forum"
+                    sx={imageStyle}
+                  />
+                </Box>
                 <Typography
                   variant="body2"
                   sx={{ fontSize: '0.95rem', lineHeight: 1.6 }}
                 >
-                  A forum-style dashboard enabling developers to create forums, posts, and comments. Developed as my third project during General Assembly’s Full Stack Bootcamp, showcasing expertise in the MERN stack (MongoDB, Express.js, React, Node.js).
+                  A forum-style dashboard enabling developers to create forums, posts, and comments. Developed as my third project during General Assembly’s Full Stack Bootcamp.
                 </Typography>
-                <a
-                href="https://gitcentral.netlify.app/"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="https://gitcentral.netlify.app/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View GitCentral Developer Forum"
+                    >
+                      App
+                    </Button>
+                  </a>
+                  <a
+                    href="https://github.com/Michael-Anderson92/GitCentral-App.git"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View GitCentral Developer Forum"
+                    >
+                      GitHub
+                    </Button>
+                  </a>
+                </div>
               </Box>
-              <img
-                src="./backgrounds/gitcentral-screenshot1.png"
-                alt="GitCentral Developer Forum"
-              />
             </Box>
 
             {/* Project 3 */}
-            <Box sx={combinedProjectItemStyle}>
+            <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
                   variant="h6"
                   component="h3"
                   sx={{
                     fontWeight: 600,
-                    color: 'var(--blue)', // #00bcd4
+                    color: 'var(--blue)',
                     position: 'relative',
                     pb: 1,
                     '&:after': {
                       content: '""',
                       position: 'absolute',
-                      bottom: 0,
+                      bottom: '0',
                       left: '50%',
                       transform: 'translateX(-50%)',
                       width: '50px',
                       height: '2px',
-                      bgcolor: 'var(--white)', // #f5f5f5
+                      bgcolor: 'var(--white)',
                     },
                   }}
                 >
                   Health Nut Metrics Tracker
                 </Typography>
+                <Box sx={imageWrapperStyle}>
+                  <Box
+                    component="img"
+                    src="./backgrounds/health-nut-screenshot1.png"
+                    alt="Health Nut Metrics Tracker"
+                    sx={imageStyle}
+                  />
+                </Box>
                 <Typography
                   variant="body2"
                   sx={{ fontSize: '0.95rem', lineHeight: 1.6 }}
                 >
-                  A CRUD application for tracking health metrics, with a focus on medication management. Built with EJS, MongoDB, Mongoose, and Express.js during my time at General Assembly.
+                  A simple health-tracking application that allows users to keep track of important health metrics.
                 </Typography>
-                <a
-                href="https://health-nut-1c88ef5e7455.herokuapp.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                ><Button
-                sx={{
-                  bgcolor: 'var(--blue)', // #00bcd4
-                  color: 'var(--white)', // #f5f5f5
-                  padding: '0.5rem 1rem',
-                  fontSize: '.8rem',
-                  fontWeight: 600,
-                  border: '2px solid var(--white)', // #f5f5f5
-                  borderRadius: '8px',
-                  mt: 1,
-                  transition: 'background-color 0.3s, color 0.3s',
-                  '&:hover': {
-                    bgcolor: 'var(--white)', // #f5f5f5
-                    color: 'var(--blue)', // #00bcd4
-                    borderColor: 'var(--blue)',
-                  },
-                }}
-                aria-label="View Health Nut Metrics Tracker"
-              >
-                View
-              </Button>
-            </a>
+                <div className="flex justify-center gap-4">
+                  <a
+                    href="https://health-nut-1c88ef5e7455.herokuapp.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View GitCentral Developer Forum"
+                    >
+                      App
+                    </Button>
+                  </a>
+                  <a
+                    href="https://github.com/Michael-Anderson92/men-stack-crud-app-project"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Button
+                      sx={{
+                        bgcolor: 'var(--blue)',
+                        color: 'var(--white)',
+                        padding: '0.5rem 1rem',
+                        fontSize: '.8rem',
+                        fontWeight: 600,
+                        border: '2px solid var(--white)',
+                        borderRadius: '8px',
+                        mt: 1,
+                        transition: 'background-color 0.3s, color 0.3s',
+                        '&:hover': {
+                          bgcolor: 'var(--white)',
+                          color: 'var(--blue)',
+                          borderColor: 'var(--blue)',
+                        },
+                      }}
+                      aria-label="View Health Nut GitHub"
+                    >
+                      GitHub
+                    </Button>
+                  </a>
+                </div>
               </Box>
-              <img
-                src="./backgrounds/health-nut-screenshot1.png"
-                alt="Health Nut Metrics Tracker"
-              />
             </Box>
           </Box>
           <Button
             sx={{
-              bgcolor: 'var(--blue)', // #00bcd4
-              color: 'var(--white)', // #f5f5f5
+              bgcolor: 'var(--blue)',
+              color: 'var(--white)',
               padding: '0.75rem 1.5rem',
               fontSize: '.9rem',
               fontWeight: 600,
-              border: '2px solid var(--white)', // #f5f5f5
+              border: '2px solid var(--white)',
               borderRadius: '8px',
               marginTop: '2.5rem',
               transition: 'background-color 0.3s, color 0.3s',
               '&:hover': {
-                bgcolor: 'var(--white)', // #f5f5f5
-                color: 'var(--blue)', // #00bcd4
+                bgcolor: 'var(--white)',
+                color: 'var(--blue)',
                 borderColor: 'var(--blue)',
               },
             }}
