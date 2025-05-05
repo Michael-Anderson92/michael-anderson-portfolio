@@ -117,7 +117,7 @@ export default function Page() {
 
           
 
-          <section className="p-2">
+          <section className="p-4">
             <VerticalLinearStepper />
           </section>
           <p className="text-center mb-8"

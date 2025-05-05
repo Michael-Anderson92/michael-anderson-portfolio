@@ -53,7 +53,7 @@ export default function VerticalLinearStepper() {
   const [stepTops, setStepTops] = React.useState<number[]>([]);
   
 
-  // Measure each step's top offset relative to the page
+  
   React.useEffect(() => {
     const updateStepTops = () => {
       const tops = stepRefs.current.map(ref => {
@@ -68,11 +68,11 @@ export default function VerticalLinearStepper() {
     return () => window.removeEventListener('resize', updateStepTops);
   }, [steps.length]);
 
-  // Listen to window scroll
+ // Window scroll effect
   React.useEffect(() => {
     const onScroll = () => {
       if (!stepTops.length) return;
-      const scrollY = window.scrollY + window.innerHeight / 1.5; // Trigger a bit before center
+      const scrollY = window.scrollY + window.innerHeight / 1.5; 
       let newActive = 0;
       for (let i = 0; i < stepTops.length; i++) {
         if (scrollY >= stepTops[i]) {

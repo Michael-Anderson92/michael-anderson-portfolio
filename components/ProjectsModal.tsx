@@ -152,7 +152,7 @@ export default function ProjectsModal() {
               textShadow: '0 2px 4px rgba(0, 188, 212, 0.3)',
             }}
           >
-            My Projects
+            Projects
           </Typography>
           <Box sx={projectContainerStyle}>
             {/* Project 1 */}
@@ -178,7 +178,7 @@ export default function ProjectsModal() {
                     },
                   }}
                 >
-                  CandyBar E-Commerce App
+                  CandyBar <br></br>E-Commerce App
                 </Typography>
                 <Box sx={imageWrapperStyle}>
                   <Box
@@ -276,7 +276,7 @@ export default function ProjectsModal() {
                     },
                   }}
                 >
-                  GitCentral Developer Forum
+                  GitCentral <br></br>Developer Forum
                 </Typography>
                 <Box sx={imageWrapperStyle}>
                   <Box
@@ -374,7 +374,7 @@ export default function ProjectsModal() {
                     },
                   }}
                 >
-                  Health Nut Metrics Tracker
+                  Health Nut <br></br>Metrics Tracker
                 </Typography>
                 <Box sx={imageWrapperStyle}>
                   <Box
