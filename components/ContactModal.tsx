@@ -7,25 +7,24 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useForm, ValidationError } from '@formspree/react';
 
-// Main Modal Style
 const mainStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'var(--black)', // Custom background color
-  color: 'var(--white)', // Custom text color
+  bgcolor: 'var(--black)',
+  color: 'var(--white)', 
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  height: '100vh', // Full height for the modal
-  width: '100vw', // Full width for the modal
-  maxWidth: '100vw', // Prevent overflow
+  height: '100vh', 
+  width: '100vw',
+  maxWidth: '100vw', 
   outline: 'none',
-  display: 'flex', // Use flexbox for alignment
-  flexDirection: 'column', // Stack elements vertically
-  alignItems: 'center', // Align items to the center
-  justifyContent: 'space-between', // Space between elements
+  display: 'flex', 
+  flexDirection: 'column', 
+  alignItems: 'center', 
+  justifyContent: 'space-between', 
 };
 
 const warningStyle = {
@@ -33,13 +32,13 @@ const warningStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'var(--black)', // Custom background color
-  color: 'var(--white)', // Custom text color
+  bgcolor: 'var(--black)',
+  color: 'var(--white)', 
   borderRadius: 2,
   boxShadow: 24,
   p: 4,
-  width: '80vw', // Moderate width for warning modal
-  maxWidth: '100vw', // Prevent horizontal overflow
+  width: '80vw', 
+  maxWidth: '100vw', 
   outline: 'none',
   textAlign: 'center',
 };
@@ -50,7 +49,7 @@ export default function ContactModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    setShowWarning(false); // Reset warning state
+    setShowWarning(false); 
   };
   const [state, handleSubmit] = useForm("mwplrkvj");
 
@@ -120,7 +119,7 @@ export default function ContactModal() {
               width: '100%',
             }}
           >
-            {/* Email Field */}
+
             <div style={{ width: '80%' }}>
               <label
                 htmlFor="email"
@@ -150,7 +149,6 @@ export default function ContactModal() {
               <ValidationError prefix="Email" field="email" errors={state.errors} />
             </div>
 
-            {/* Message Field */}
             <div style={{ width: '80%' }}>
               <label
                 htmlFor="message"
@@ -176,7 +174,7 @@ export default function ContactModal() {
                   borderRadius: '4px',
                   backgroundColor: 'var(--black)',
                   color: 'var(--white)',
-                  resize: 'none', // Prevent resizing
+                  resize: 'none',
                 }}
               />
               <ValidationError prefix="Message" field="message" errors={state.errors} />
@@ -190,7 +188,6 @@ export default function ContactModal() {
                 gap: '1rem',
               }}
             >
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={state.submitting}
@@ -207,7 +204,6 @@ export default function ContactModal() {
                 Submit
               </button>
 
-              {/* Back Button */}
               <button
                 type="button"
                 onClick={() => setShowWarning(true)}
@@ -228,7 +224,6 @@ export default function ContactModal() {
         </Box>
       </Modal>
 
-      {/* Warning Popup Modal */}
       <Modal
         open={showWarning}
         onClose={() => setShowWarning(false)}

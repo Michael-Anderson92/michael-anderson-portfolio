@@ -9,8 +9,12 @@ import Box from '@mui/material/Box';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import VerticalLinearStepper from '@/components/VerticalLinearStepper';
 import ResponsiveNav from '@/components/ResponsiveNav';
+import { BackgroundBeams } from '@/components/ui/background-beams';
 
 const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat, sans-serif',
+  },
   palette: {
     primary: {
       main: '#007FFF',
@@ -61,19 +65,20 @@ export default function Page() {
           
         }}
       >
+        <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-[1000]" />
         <main className="flex-grow flex flex-col">
         <header
   style={{
-    position: 'sticky', // Set sticky positioning
-    top: '0', // Sticks to the top of the viewport
-    zIndex: '10', // Ensures it stays above other elements
-    backgroundColor: 'var(--black)', // Keeps the background consistent as it scrolls
+    position: 'sticky', 
+    top: '0', 
+    zIndex: '10',
+    backgroundColor: 'var(--black)',
     width: '100%',
 
   }}
 >
   <h1
-    className="text-3xl text-center"
+    className="sm:text-4xl  lg:text-8xl lg:p-16 text-center"
     style={{
       color: 'var(--blue)',
       lineHeight: '64px',

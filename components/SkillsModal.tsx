@@ -6,15 +6,14 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-// Main Modal Style
 const mainStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'var(--black)', // #1e1e1e
-  color: 'var(--white)', // #f5f5f5
-  border: '2px solid var(--blue)', // #00bcd4 border
+  bgcolor: 'var(--black)', 
+  color: 'var(--white)', 
+  border: '2px solid var(--blue)', 
   borderRadius: '12px',
   boxShadow: '0 8px 32px rgba(0, 188, 212, 0.2)',
   p: 5,
@@ -29,7 +28,6 @@ const mainStyle = {
   overflowY: 'auto',
 };
 
-// Skills Container Style
 const skillsContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -45,7 +43,6 @@ const skillsContainerStyle = {
   },
 };
 
-// Skill Category Style
 const skillCategoryStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -55,7 +52,7 @@ const skillCategoryStyle = {
   width: '100%',
   minHeight: '300px',
   bgcolor: 'var(--black)',
-  border: '1px solid var(--blue)', // #00bcd4 border
+  border: '1px solid var(--blue)',
   borderRadius: '10px',
   p: 3,
   boxShadow: '0 4px 16px rgba(0, 188, 212, 0.15)',
@@ -71,7 +68,7 @@ const skillCategoryStyle = {
   },
 };
 
-// Logo Container Style
+
 const logoContainerStyle = {
   display: 'flex',
   flexWrap: 'wrap',
@@ -81,7 +78,6 @@ const logoContainerStyle = {
   width: '100%',
 };
 
-// Logo Style
 const logoStyle = {
   width: '60px',
   height: '60px',
@@ -93,7 +89,6 @@ const logoStyle = {
   },
 };
 
-// Text Container Style
 const textContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -109,7 +104,6 @@ export default function ProjectsModal() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Skills data organized by category
   const skills = [
     {
       category: 'Languages',
@@ -178,19 +172,21 @@ export default function ProjectsModal() {
           style: { backgroundColor: 'rgba(30, 30, 30, 0.85)' },
         }}
       >
+        
         <Box sx={mainStyle}>
           <Typography
             id="modal-modal-title"
             variant="h5"
-            component="h2"
+            component="h3"
             sx={{
+              fontFamily: 'Montserrat, sans-serif',
               textAlign: 'center',
               marginBottom: '1.5rem',
               fontWeight: 700,
               textShadow: '0 2px 4px rgba(0, 188, 212, 0.3)',
             }}
           >
-            Skills
+           <h1 className="text-5xl">Skills</h1>
           </Typography>
 
           <Box sx={skillsContainerStyle}>
@@ -199,6 +195,7 @@ export default function ProjectsModal() {
                 <Typography
                   variant="h6"
                   sx={{
+                    fontFamily: 'Montserrat, sans-serif',
                     fontWeight: 600,
                     color: 'var(--blue)',
                     textAlign: 'center',
@@ -209,8 +206,13 @@ export default function ProjectsModal() {
                 <Box sx={logoContainerStyle}>
                   {skillGroup.items.map((skill) => (
                     <Box key={skill.name} sx={{ textAlign: 'center' }}>
-                      <img src={skill.logo} alt={skill.name} style={logoStyle} />
-                      <Typography variant="caption" sx={{ color: 'var(--white)', mt: 1 }}>
+                      <Box
+                          component="img"
+                          src={skill.logo}
+                          alt={skill.name}
+                          sx={logoStyle}
+                        />
+                      <Typography variant="caption" sx={{ fontFamily: 'Montserrat, sans-serif', color: 'var(--white)', mt: 1 }}>
                         {skill.name}
                       </Typography>
                     </Box>

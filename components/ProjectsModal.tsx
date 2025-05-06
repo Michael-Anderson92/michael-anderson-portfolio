@@ -6,15 +6,14 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-// Main Modal Style
 const mainStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'var(--black)', // #1e1e1e
-  color: 'var(--white)', // #f5f5f5
-  border: '2px solid var(--blue)', // #00bcd4 border
+  bgcolor: 'var(--black)', 
+  color: 'var(--white)', 
+  border: '2px solid var(--blue)',
   borderRadius: '12px',
   boxShadow: '0 8px 32px rgba(0, 188, 212, 0.2)',
   p: 5,
@@ -29,7 +28,6 @@ const mainStyle = {
   overflowY: 'auto',
 };
 
-// Project Container Style
 const projectContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -44,17 +42,16 @@ const projectContainerStyle = {
   },
 };
 
-// Project Item Style
 const projectItemStyle = {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
   alignItems: 'center',
-  justifyContent: 'space-between', // Distribute content evenly
+  justifyContent: 'space-between',
   width: '100%',
-  minHeight: '400px', // Ensure all cards have the same minimum height
+  minHeight: '400px',
   bgcolor: 'var(--black)',
-  border: '1px solid var(--blue)', // #00bcd4 border
+  border: '1px solid var(--blue)',
   borderRadius: '10px',
   p: 3,
   boxShadow: '0 4px 16px rgba(0, 188, 212, 0.15)',
@@ -66,17 +63,16 @@ const projectItemStyle = {
   '@media (min-width: 768px)': {
     width: '33%',
     maxWidth: '380px',
-    flex: '1 1 0', // Ensure equal sizing in row layout
+    flex: '1 1 0',
   },
 };
 
-// Image Style
 const imageStyle = {
   width: '200px',
   height: '200px',
   objectFit: 'cover',
   borderRadius: '8px',
-  border: '2px solid var(--blue)', // #00bcd4 border
+  border: '2px solid var(--blue)', 
   flexShrink: 0,
   '@media (min-width: 768px)': {
     width: '150px',
@@ -89,7 +85,6 @@ const imageStyle = {
   },
 };
 
-// Text Container Style
 const textContainerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -97,10 +92,9 @@ const textContainerStyle = {
   textAlign: 'center',
   width: '100%',
   px: 2,
-  flexGrow: 1, // Allow text container to expand to fill space
+  flexGrow: 1,
 };
 
-// Image Wrapper Style to Ensure Centering
 const imageWrapperStyle = {
   display: 'flex',
   justifyContent: 'center',
@@ -155,7 +149,6 @@ export default function ProjectsModal() {
             Projects
           </Typography>
           <Box sx={projectContainerStyle}>
-            {/* Project 1 */}
             <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
@@ -253,7 +246,6 @@ export default function ProjectsModal() {
               </Box>
             </Box>
 
-            {/* Project 2 */}
             <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
@@ -351,7 +343,6 @@ export default function ProjectsModal() {
               </Box>
             </Box>
 
-            {/* Project 3 */}
             <Box sx={projectItemStyle}>
               <Box sx={textContainerStyle}>
                 <Typography
