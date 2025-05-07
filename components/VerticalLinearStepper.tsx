@@ -57,42 +57,45 @@ export default function VerticalLinearStepper() {
   
 
   
-  // React.useEffect(() => {
-  //   const updateStepTops = () => {
-  //     const tops = stepRefs.current.map(ref => {
-  //       if (!ref) return 0;
-  //       const rect = ref.getBoundingClientRect();
-  //       return rect.top + window.scrollY;
-  //     });
-  //     setStepTops(tops);
-  //   };
-  //   updateStepTops();
-  //   window.addEventListener('resize', updateStepTops);
-  //   return () => window.removeEventListener('resize', updateStepTops);
-  // }, [steps.length]);
+  React.useEffect(() => {
+    const updateStepTops = () => {
+      const tops = stepRefs.current.map(ref => {
+        if (!ref) return 0;
+        const rect = ref.getBoundingClientRect();
+        return rect.top + window.scrollY;
+      });
+      setStepTops(tops);
+    };
+    updateStepTops();
+    window.addEventListener('resize', updateStepTops);
+    return () => window.removeEventListener('resize', updateStepTops);
+  }, [steps.length]);
 
  
-  // React.useEffect(() => {
-  //   const onScroll = () => {
-  //     if (!stepTops.length) return;
-  //     const scrollY = window.scrollY + window.innerHeight / 1.5; 
-  //     let newActive = 0;
-  //     for (let i = 0; i < stepTops.length; i++) {
-  //       if (scrollY >= stepTops[i]) {
-  //         newActive = i;
-  //       } else {
-  //         break;
-  //       }
-  //     }
-  //     setActiveStep(newActive);
-  //   };
-  //   window.addEventListener('scroll', onScroll, { passive: true });
-  //   return () => window.removeEventListener('scroll', onScroll);
-  // }, [stepTops]);
+  React.useEffect(() => {
+    const onScroll = () => {
+      if (!stepTops.length) return;
+      const scrollY = window.scrollY + window.innerHeight / 1.5; 
+      let newActive = 0;
+      for (let i = 0; i < stepTops.length; i++) {
+        if (scrollY >= stepTops[i]) {
+          newActive = i;
+        } else {
+          break;
+        }
+      }
+      setActiveStep(newActive);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [stepTops]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ maxWidth: 420, margin: '0 auto', py: 4 }}>
+      <Box sx={{  
+        maxWidth: {sm: 420, lg: 600},
+        margin: {sm: '0 auto', lg: 0},
+        py: 4 }}>
         <Box>
           {steps.map((step, idx) => (
             <Box

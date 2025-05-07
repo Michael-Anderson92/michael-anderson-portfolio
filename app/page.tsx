@@ -78,7 +78,7 @@ export default function Page() {
   }}
 >
   <h1
-    className="sm:text-4xl  lg:text-8xl lg:p-16 text-center"
+    className="sm:text-4xl  lg:text-8xl lg:pt-12 lg:pb-8 text-center"
     style={{
       color: 'var(--blue)',
       lineHeight: '64px',
@@ -87,7 +87,7 @@ export default function Page() {
     Michael Anderson
   </h1>
   <h3
-    className="text-2xl text-center"
+    className="sm:text-2xl lg:text-6xl text-center"
     style={{
       color: 'var(--white)',
       marginBottom: '1vh',
@@ -112,11 +112,7 @@ export default function Page() {
       </a>
     ))}
   </nav>
-  <section className="my-4">
-            <h1 className="text-center text-white italic">
-              "Thanks for stopping by!"
-            </h1>
-          </section>
+  
           <ResponsiveNav />
 </header>
 
@@ -124,6 +120,11 @@ export default function Page() {
 
           <section className="p-4">
             <VerticalLinearStepper />
+          </section>
+          <section className="my-4">
+            <h1 className="text-center text-white italic">
+              "Thanks for stopping by!"
+            </h1>
           </section>
           <p className="text-center mb-8"
           style={{
