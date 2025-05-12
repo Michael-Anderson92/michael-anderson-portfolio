@@ -11,13 +11,13 @@ export default function BottomNav() {
         </h1>
       </section>
       <p 
-        className="text-center mb-8"
-        style={{
-          color: 'var(--white)',
-        }}
-      >
-        © 2025 Michael Anderson. All rights reserved.
-      </p>
+  className="text-center mb-8"
+  style={{
+    color: 'var(--white)',
+  }}
+>
+  © 2025 Michael Anderson | CrossHaven Web Solutions NGO. All rights reserved.
+</p>
     </footer>
   );
 }

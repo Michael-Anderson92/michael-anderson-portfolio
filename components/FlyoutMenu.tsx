@@ -70,7 +70,7 @@ export default function FlyoutMenu() {
           animate="open"
           exit="closed"
           variants={menuVariants}
-          className="fixed left-0 top-0 h-screen w-64 /90 z-50 flex flex-col justify-center"
+          className="sticky left-0 top-0 h-screen w-64 /90 z-50 flex flex-col justify-center"
         >
           <div className="flex flex-col gap-8 px-8">
             {menuItems.map((item) => (
