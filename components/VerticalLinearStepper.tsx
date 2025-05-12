@@ -94,7 +94,7 @@ export default function VerticalLinearStepper() {
     <ThemeProvider theme={theme}>
       <Box sx={{  
         maxWidth: {sm: 420, lg: 600},
-        margin: {sm: '0 auto', lg: 0},
+        margin: {sm: '0 auto', lg: '0 auto'},
         py: 4 }}>
         <Box>
           {steps.map((step, idx) => (

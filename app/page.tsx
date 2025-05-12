@@ -10,7 +10,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import VerticalLinearStepper from '@/components/VerticalLinearStepper';
 import ResponsiveNav from '@/components/ResponsiveNav';
 import { BackgroundBeams } from '@/components/ui/background-beams';
-
+import FlyoutMenu from '@/components/FlyoutMenu';
+import BottomNav from '@/components/BottomNav';
 const theme = createTheme({
   typography: {
     fontFamily: 'Montserrat, sans-serif',
@@ -62,74 +63,65 @@ export default function Page() {
           backgroundColor: 'var(--black)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          
         }}
       >
         <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-[1000]" />
         <main className="flex-grow flex flex-col">
-        <header
-  style={{
-    position: 'sticky', 
-    top: '0', 
-    zIndex: '10',
-    backgroundColor: 'var(--black)',
-    width: '100%',
-
-  }}
->
-  <h1
-    className="sm:text-4xl  lg:text-8xl lg:pt-12 lg:pb-8 text-center"
-    style={{
-      color: 'var(--blue)',
-      lineHeight: '64px',
-    }}
-  >
-    Michael Anderson
-  </h1>
-  <h3
-    className="sm:text-2xl lg:text-6xl text-center"
-    style={{
-      color: 'var(--white)',
-      marginBottom: '1vh',
-    }}
-  >
-    Full Stack Web Developer
-  </h3>
-  <nav className="flex justify-center gap-6 my-4 mx-auto">
-    {socialLinks.map(({ href, label, svg }) => (
-      <a
-        key={label}
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={label}
-        className="transition-colors duration-200"
-        style={{
-          color: 'var(--white)',
-        }}
-      >
-        {svg}
-      </a>
-    ))}
-  </nav>
-  
-          <ResponsiveNav />
-</header>
-
-          
-
-          <section className="p-4">
-            <VerticalLinearStepper />
-          </section>
-          <section className="my-4">
-            <h1 className="text-center text-white italic">
-              "Thanks for stopping by!"
+          <header
+            style={{
+              position: 'sticky', 
+              top: '0', 
+              zIndex: '10',
+              backgroundColor: 'var(--black)',
+              width: '100%',
+            }}
+          >
+            <h1
+              className="sm:text-4xl lg:text-7xl lg:pt-12 lg:pb-8 text-center"
+              style={{
+                color: 'var(--blue)',
+              }}
+            >
+              Michael Anderson
             </h1>
-          </section>
-          <p className="text-center mb-8"
-          style={{
-            color: 'var(--white)',
-          }}>© 2025 Michael Anderson. All rights reserved.</p>
+            <h3
+              className="sm:text-2xl lg:text-4xl text-center align-center"
+              style={{
+                color: 'var(--white)',
+                marginBottom: '1vh',
+              }}
+            >
+              Full Stack Web Developer
+            </h3>
+            <nav className="flex justify-center gap-6 my-4 mx-auto">
+              {socialLinks.map(({ href, label, svg }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={label}
+                  className="transition-colors duration-200"
+                  style={{
+                    color: 'var(--white)',
+                  }}
+                >
+                  {svg}
+                </a>
+              ))}
+            </nav>
+          </header>
+
+          <div className="flex flex-row">
+            <section className="w-1/2">
+              <FlyoutMenu />
+            </section>
+            <section className="w-1/2 p-4">
+              <VerticalLinearStepper />
+            </section>
+          </div>
+
+          <BottomNav />
         </main>
       </div>
     </ThemeProvider>
