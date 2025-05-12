@@ -66,7 +66,7 @@ export default function FlyoutMenu() {
         variants={menuVariants}
         className="fixed bottom-[8%] left-[3%] w-64 z-50 flex flex-col justify-center"
       >
-        <div className="flex flex-col gap-8 px-8">
+        <div className="flex flex-col gap-16 mb-8 px-8">
           {menuItems.map((item) => (
             <motion.a
               key={item.title}

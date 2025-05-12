@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { Suspense } from 'react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -65,7 +66,9 @@ export default function Page() {
           backgroundPosition: 'center',
         }}
       >
-        <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-[1000]" />
+        <Suspense fallback={<div className="w-full h-full bg-black" />}>
+          <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-[1000]" />
+        </Suspense>
         <main className="flex-grow flex flex-col">
           <header
             style={{
@@ -114,14 +117,20 @@ export default function Page() {
 
           <div className="flex flex-row">
             <section className="w-1/2">
-              <FlyoutMenu />
+              <Suspense fallback={<div className="w-full h-64 bg-black" />}>
+                <FlyoutMenu />
+              </Suspense>
             </section>
             <section className="w-1/2 p-4">
-              <VerticalLinearStepper />
+              <Suspense fallback={<div className="w-full h-[600px] bg-black" />}>
+                <VerticalLinearStepper />
+              </Suspense>
             </section>
           </div>
 
-          <BottomNav />
+          <Suspense fallback={<div className="w-full h-32 bg-black" />}>
+            <BottomNav />
+          </Suspense>
         </main>
       </div>
     </ThemeProvider>
