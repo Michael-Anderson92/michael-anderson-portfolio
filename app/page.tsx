@@ -13,6 +13,7 @@ import ResponsiveNav from '@/components/ResponsiveNav';
 import { BackgroundBeams } from '@/components/ui/background-beams';
 import FlyoutMenu from '@/components/FlyoutMenu';
 import BottomNav from '@/components/BottomNav';
+
 const theme = createTheme({
   typography: {
     fontFamily: 'Montserrat, sans-serif',
@@ -59,79 +60,93 @@ export default function Page() {
   return (
     <ThemeProvider theme={theme}>
       <div
-        className="flex flex-col min-h-screen"
+        className="grid grid-rows-[auto_auto_1fr_auto] min-h-screen"
         style={{
           backgroundColor: 'var(--black)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          gridTemplateColumns: '1fr', // Single column for main grid
         }}
       >
         <Suspense fallback={<div className="w-full h-full bg-black" />}>
           <BackgroundBeams className="absolute top-0 left-0 w-full h-full z-[1000]" />
         </Suspense>
-        <main className="flex-grow flex flex-col">
-          <header
+        
+        {/* Header Section - Grid Row 1 */}
+        <header
+          className="z-10"
+          style={{
+            position: 'sticky', 
+            top: '0', 
+            backgroundColor: 'var(--black)',
+            width: '100%',
+          }}
+        >
+          <h1
+            className="sm:text-4xl lg:text-7xl lg:pt-12 lg:pb-8 text-center"
+            style={{ color: 'var(--blue)' }}
+          >
+            Michael Anderson
+          </h1>
+          <h3
+            className="sm:text-2xl lg:text-4xl text-center align-center"
             style={{
-              position: 'sticky', 
-              top: '0', 
-              zIndex: '10',
-              backgroundColor: 'var(--black)',
-              width: '100%',
+              color: 'var(--white)',
+              marginBottom: '1vh',
             }}
           >
-            <h1
-              className="sm:text-4xl lg:text-7xl lg:pt-12 lg:pb-8 text-center"
-              style={{
-                color: 'var(--blue)',
-              }}
-            >
-              Michael Anderson
-            </h1>
-            <h3
-              className="sm:text-2xl lg:text-4xl text-center align-center"
-              style={{
-                color: 'var(--white)',
-                marginBottom: '1vh',
-              }}
-            >
-              Full Stack Web Developer
-            </h3>
-            <nav className="flex justify-center gap-6 my-4 mx-auto">
-              {socialLinks.map(({ href, label, svg }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="transition-colors duration-200"
-                  style={{
-                    color: 'var(--white)',
-                  }}
-                >
-                  {svg}
-                </a>
-              ))}
-            </nav>
-          </header>
+            Full Stack Web Developer
+          </h3>
+          <nav className="flex justify-center gap-6 my-4 mx-auto">
+            {socialLinks.map(({ href, label, svg }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="transition-colors duration-200"
+                style={{ color: 'var(--white)' }}
+              >
+                {svg}
+              </a>
+            ))}
+          </nav>
+        </header>
 
-          <div className="flex flex-row">
-            <section className="w-1/2">
-              <Suspense fallback={<div className="w-full h-64 bg-black" />}>
-                <FlyoutMenu />
-              </Suspense>
-            </section>
-            <section className="w-1/2 p-4">
+        {/* Menu Section - Grid Row 2 */}
+        <section className="z-10">
+          <Suspense fallback={<div className="w-full h-16 bg-black" />}>
+            <FlyoutMenu />
+          </Suspense>
+        </section>
+
+        {/* Main Content - Grid Row 3 */}
+        <main className="grid grid-cols-1 md:grid-cols-5 overflow-hidden">
+          {/* Left Column */}
+          <section className="md:col-span-2 overflow-y-auto border-r border-gray-800" style={{ backgroundColor: 'var(--black)' }}>
+            <div className="p-6">
+              {/* Content for left column can go here */}
+              {/* For now, it's empty as per your original design */}
+            </div>
+          </section>
+
+          {/* Right Column */}
+          <section className="md:col-span-3 overflow-y-auto" style={{ backgroundColor: 'var(--black)' }}>
+            <div className="p-6">
               <Suspense fallback={<div className="w-full h-[600px] bg-black" />}>
                 <VerticalLinearStepper />
               </Suspense>
-            </section>
-          </div>
+            </div>
+          </section>
+        </main>
 
+        {/* Bottom Navigation - Grid Row 4 */}
+        <footer className="z-10" style={{ backgroundColor: 'var(--black)' }}>
           <Suspense fallback={<div className="w-full h-32 bg-black" />}>
             <BottomNav />
           </Suspense>
-        </main>
+        </footer>
       </div>
     </ThemeProvider>
   );
