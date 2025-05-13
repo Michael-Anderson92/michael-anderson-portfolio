@@ -3,7 +3,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function FlyoutMenu() {
+interface FlyoutMenuProps {
+  setCurrentView: (view: string) => void;
+}
+
+export default function FlyoutMenu({ setCurrentView }: FlyoutMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -11,9 +15,9 @@ export default function FlyoutMenu() {
   }, []);
 
   const menuItems = [
-    { title: 'Skills', href: '#skills' },
-    { title: 'Projects', href: '#projects' }, 
-    { title: 'About Me', href: '#about' }
+    { title: 'Skills', view: 'skills' },
+    { title: 'Projects', view: 'projects' },
+    { title: 'About Me', view: 'about' }
   ];
 
   const menuVariants = {
@@ -56,30 +60,38 @@ export default function FlyoutMenu() {
     }
   };
 
+  const handleClick = (view: string) => {
+    setCurrentView(view);
+    // Optionally close the menu after selection
+    // setIsOpen(false);
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-        initial="closed"
-        animate="open"
-        exit="closed"
-        variants={menuVariants}
-        className="fixed bottom-[8%] left-[3%] w-64 z-50 flex flex-col justify-center"
-      >
-        <div className="flex flex-col gap-16 mb-8 px-8">
-          {menuItems.map((item) => (
-            <motion.a
-              key={item.title}
-              href={item.href}
-              variants={itemVariants}
-              className="text-6xl font-semibold text-white hover:text-blue-400 transition-colors whitespace-nowrap"
-              onClick={() => setIsOpen(false)}
-            >
-              {item.title}
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
+          initial="closed"
+          animate="open"
+          exit="closed"
+          variants={menuVariants}
+          className="fixed bottom-[8%] left-[3%] w-64 z-50 flex flex-col justify-center"
+        >
+          <div className="flex flex-col gap-16 mb-8 px-8">
+            {menuItems.map((item) => (
+              <motion.div
+                key={item.title}
+                variants={itemVariants}
+              >
+                <button
+                  onClick={() => handleClick(item.view)}
+                  className="text-6xl font-semibold text-white hover:text-blue-400 transition-colors whitespace-nowrap"
+                >
+                  {item.title}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

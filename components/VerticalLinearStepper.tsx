@@ -95,15 +95,15 @@ export default function VerticalLinearStepper() {
       <Box sx={{  
         maxWidth: {sm: 420, lg: 600},
         margin: {sm: '0 auto', lg: '0 auto'},
-        py: 4 }}>
+        }}>
         <Box>
           {steps.map((step, idx) => (
             <Box
               key={step.label}
               ref={(el: HTMLDivElement | null) => { stepRefs.current[idx] = el; }}
               sx={{
-                mb: 3,
-                p: 3,
+                mt: 2,
+                p: 5,
                 borderRadius: 2,
                 background: 'var(--black)',
                 border: activeStep === idx
@@ -121,7 +121,7 @@ export default function VerticalLinearStepper() {
                 sx={{
                   color: activeStep === idx ? 'var(--blue)' : 'var(--gray)',
                   fontWeight: 600,
-                  mb: 1,
+                  mb: 3,
                   transition: 'color 0.3s',
                 }}
               >
