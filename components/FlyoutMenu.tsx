@@ -74,7 +74,7 @@ export default function FlyoutMenu({ setCurrentView }: FlyoutMenuProps) {
           animate="open"
           exit="closed"
           variants={menuVariants}
-          className="fixed bottom-[8%] left-[3%] w-64 z-50 flex flex-col justify-center"
+          className="fixed bottom-[8%] left-[3%] w-64 z-[1001] flex flex-col justify-center"
         >
           <div className="flex flex-col gap-16 mb-8 px-8">
             {menuItems.map((item) => (
@@ -84,7 +84,7 @@ export default function FlyoutMenu({ setCurrentView }: FlyoutMenuProps) {
               >
                 <button
                   onClick={() => handleClick(item.view)}
-                  className="text-6xl font-semibold text-white hover:text-blue-400 transition-colors whitespace-nowrap"
+                  className="text-6xl font-semibold text-white hover:text-[#00bcd4] transition-colors duration-300 whitespace-nowrap cursor-pointer"
                 >
                   {item.title}
                 </button>
