@@ -12,6 +12,9 @@ import { BackgroundBeams } from '@/components/ui/background-beams';
 import FlyoutMenu from '@/components/FlyoutMenu';
 import BottomNav from '@/components/BottomNav';
 import Header from '@/components/Header';
+import SkillsContent from '@/components/SkillsContent';
+import AboutContent from '@/components/AboutContent';
+import ProjectsContent from '@/components/ProjectsContent';
 // Import your content components here
 // import SkillsContent from '@/components/SkillsContent';
 // import ProjectsContent from '@/components/ProjectsContent';
@@ -30,26 +33,10 @@ const theme = createTheme({
 });
 
 // Temporary placeholder components - replace with your actual components
-const SkillsContent = () => (
-  <div className="text-white">
-    <h2 className="text-4xl mb-4">Skills</h2>
-    <p>Your skills content goes here...</p>
-  </div>
-);
 
-const ProjectsContent = () => (
-  <div className="text-white">
-    <h2 className="text-4xl mb-4">Projects</h2>
-    <p>Your projects content goes here...</p>
-  </div>
-);
 
-const AboutContent = () => (
-  <div className="text-white">
-    <h2 className="text-4xl mb-4">About Me</h2>
-    <p>Your about me content goes here...</p>
-  </div>
-);
+
+
 
 export default function Page() {
   const [currentView, setCurrentView] = useState('home');
