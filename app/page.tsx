@@ -15,10 +15,6 @@ import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
-// Import your content components here
-// import SkillsContent from '@/components/SkillsContent';
-// import ProjectsContent from '@/components/ProjectsContent';
-// import AboutContent from '@/components/AboutContent';
 
 const theme = createTheme({
   typography: {
@@ -82,9 +78,9 @@ export default function Page() {
           </section>
 
           {/* Right Column */}
-          <section className="md:col-span-3 overflow-y-auto" style={{ backgroundColor: 'var(--black)' }}>
+          <section className="md:col-span-3 w-full overflow-y-auto" style={{ backgroundColor: 'var(--black)' }}>
             <div className="p-6">
-              <Suspense fallback={<div className="w-full h-[600px] bg-black" />}>
+              <Suspense fallback={<div className="mx-auto w-full h-[600px] bg-black" />}>
                 {renderContent()}
               </Suspense>
             </div>
