@@ -95,9 +95,9 @@ export default function Page() {
         </footer>
 
         {/* FlyoutMenu as an overlay - now passes setCurrentView */}
-        <Suspense fallback={<div className="w-full h-16 bg-black" />}>
+        
           <FlyoutMenu setCurrentView={setCurrentView} />
-        </Suspense>
+        
       </div>
     </ThemeProvider>
   );

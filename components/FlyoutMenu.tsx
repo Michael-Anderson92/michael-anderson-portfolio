@@ -11,7 +11,9 @@ export default function FlyoutMenu({ setCurrentView }: FlyoutMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setIsOpen(true);
+    // Give the page time to fully load
+    const timer = setTimeout(() => setIsOpen(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const menuItems = [
@@ -23,22 +25,17 @@ export default function FlyoutMenu({ setCurrentView }: FlyoutMenuProps) {
   const menuVariants = {
     closed: {
       x: '-100%',
-      transition: {
-        type: 'spring',
-        stiffness: 50,
-        damping: 20,
-        duration: 0.8
-      }
+      opacity: 0,
+      transition: { duration: 0.3, ease: 'easeOut' } // Simpler easing
     },
     open: {
       x: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 50,
-        damping: 20,
-        duration: 0.8,
-        delayChildren: 0.5,
-        staggerChildren: 0.2
+      opacity: 1,
+      transition: { 
+        duration: 1.8, 
+        ease: 'easeOut',
+        delayChildren: 0.2, // Reduced delay
+        staggerChildren: 0.3 // Reduced stagger
       }
     }
   };
