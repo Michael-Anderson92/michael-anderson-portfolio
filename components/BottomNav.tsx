@@ -16,7 +16,7 @@ export default function BottomNav() {
     color: 'var(--white)',
   }}
 >
-  © 2025 Michael Anderson | CrossHaven Web Solutions NGO. All rights reserved.
+  © 2025 Michael Anderson | Anderson Web Designs. All rights reserved.
 </p>
     </footer>
   );

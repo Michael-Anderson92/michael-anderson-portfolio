@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { motion } from 'framer-motion';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -28,42 +29,47 @@ const theme = createTheme({
 interface SkillItem {
   name: string;
   logo: string;
+  proficiency: number;
 }
 
 interface SkillCategory {
   category: string;
+  icon: string;
   items: SkillItem[];
 }
 
 const skills: SkillCategory[] = [
   {
     category: 'Languages',
+    icon: '💻',
     items: [
-      { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-      { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-      { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
-      { name: 'HTML5', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-      { name: 'CSS3', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+      { name: 'JavaScript', logo: '🟨', proficiency: 95 },
+      { name: 'TypeScript', logo: '🔷', proficiency: 90 },
+      { name: 'Python', logo: '🐍', proficiency: 85 },
+      { name: 'HTML5', logo: '🌐', proficiency: 95 },
+      { name: 'CSS3', logo: '🎨', proficiency: 90 },
     ],
   },
   {
     category: 'Libraries & Frameworks',
+    icon: '⚛️',
     items: [
-      { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-      { name: 'Next.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
-      { name: 'Django', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg' },
-      { name: 'Express.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg' },
-      { name: 'TailwindCSS', logo: 'https://nanostack.io/_next/image?url=https%3A%2F%2Fnanostack.s3.ap-south-1.amazonaws.com%2F1708452954835Group%20451.png&w=828&q=75' },
+      { name: 'React', logo: '⚛️', proficiency: 95 },
+      { name: 'Next.js', logo: '▲', proficiency: 90 },
+      { name: 'Django', logo: '🌿', proficiency: 80 },
+      { name: 'Express.js', logo: '🚀', proficiency: 85 },
+      { name: 'TailwindCSS', logo: '💨', proficiency: 90 },
     ],
   },
   {
     category: 'Databases & Cloud',
+    icon: '☁️',
     items: [
-      { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-      { name: 'MongoDB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
-      { name: 'Firebase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg' },
-      { name: 'AWS', logo: 'https://www.pngall.com/wp-content/uploads/13/AWS-Logo-PNG-Pic.png' },
-      { name: 'Supabase', logo: 'https://seeklogo.com/images/S/supabase-logo-DCC676FFE2-seeklogo.com.png' },
+      { name: 'PostgreSQL', logo: '🐘', proficiency: 85 },
+      { name: 'MongoDB', logo: '🍃', proficiency: 80 },
+      { name: 'Firebase', logo: '🔥', proficiency: 85 },
+      { name: 'AWS', logo: '☁️', proficiency: 75 },
+      { name: 'Supabase', logo: '⚡', proficiency: 90 },
     ],
   },
 ];
@@ -90,7 +96,7 @@ export default function SkillsContent() {
   React.useEffect(() => {
     const onScroll = () => {
       if (!categoryTops.length) return;
-      const scrollY = window.scrollY + window.innerHeight / 1.5; 
+      const scrollY = window.scrollY + window.innerHeight / 2; 
       let newActive = 0;
       for (let i = 0; i < categoryTops.length; i++) {
         if (scrollY >= categoryTops[i]) {
@@ -107,97 +113,173 @@ export default function SkillsContent() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Typography
-        variant="h4"
-        sx={{
-          color: 'var(--white, #f5f5f5)',
-          fontWeight: 600,
-          mb: 4,
-          textAlign: 'center',
-        }}
-      >
-        Skills & Technologies
-      </Typography>
       <Box
         sx={{
-          maxWidth: { sm: 420, lg: 600 },
+          maxWidth: { sm: 420, lg: 700 },
           margin: { sm: '0 auto', lg: '0 auto' },
-          py: 4,
+          paddingBottom: 4,
+          position: 'relative',
+          zIndex: 20,
         }}
       >
         {skills.map((category, idx) => (
-          <Box
+          <motion.div
             key={category.category}
             ref={(el: HTMLDivElement | null) => { categoryRefs.current[idx] = el; }}
-            sx={{
-              mt: 2,
-              p: 5,
-              borderRadius: 2,
-              background: 'var(--black, #1e1e1e)',
-              border: activeCategory === idx
-                ? '2px solid var(--blue, #00bcd4)'
-                : '1px solid var(--gray, #616161)',
-              transition: 'background 0.3s, border 0.3s',
-              boxShadow: activeCategory === idx
-                ? '0 2px 12px 0 rgba(0,188,212,0.15)'
-                : 'none',
-              textAlign: 'center',
-            }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: idx * 0.1 }}
           >
-            <Typography
-              variant="h6"
+            <Box
               sx={{
-                color: activeCategory === idx ? 'var(--blue, #00bcd4)' : 'var(--gray, #616161)',
-                fontWeight: 600,
-                mb: 3,
-                transition: 'color 0.3s',
+                mt: idx === 0 ? 0 : 2, // Remove top margin from first box
+                p: 5,
+                borderRadius: 2,
+                background: activeCategory === idx 
+                  ? 'rgba(30, 30, 30, 0.95)' 
+                  : 'rgba(30, 30, 30, 0.85)',
+                backdropFilter: 'blur(10px)',
+                border: activeCategory === idx
+                  ? '2px solid var(--blue, #00bcd4)'
+                  : '1px solid var(--gray, #616161)',
+                transition: 'all 0.3s ease',
+                boxShadow: activeCategory === idx
+                  ? '0 4px 20px 0 rgba(0,188,212,0.2)'
+                  : 'none',
+                textAlign: 'center',
+                position: 'relative',
+                zIndex: 21,
+                '&:hover': {
+                  border: '1px solid var(--blue, #00bcd4)',
+                  background: 'rgba(30, 30, 30, 0.95)',
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 2px 12px 0 rgba(0,188,212,0.15)',
+                },
               }}
             >
-              {category.category}
-            </Typography>
-            
-            <Box 
-              sx={{ 
-                display: 'flex', 
-                flexWrap: 'wrap', 
-                justifyContent: 'center',
-                gap: 2,
-              }}
-            >
-              {category.items.map((skill) => (
-                <Box 
-                  key={skill.name} 
-                  sx={{ 
-                    textAlign: 'center',
-                    width: '80px',
-                    m: 1,
-                  }}
-                >
-                  <img
-                    src={skill.logo}
-                    alt={skill.name}
+              <motion.div
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 0.3, delay: idx * 0.1 + 0.2 }}
+                style={{
+                  fontSize: '3rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                {category.icon}
+              </motion.div>
+
+              <Typography
+                variant="h6"
+                sx={{
+                  color: activeCategory === idx ? 'var(--blue, #00bcd4)' : 'var(--gray, #616161)',
+                  fontWeight: 600,
+                  mb: 3,
+                  transition: 'color 0.3s',
+                  fontSize: { xs: '1.25rem', md: '1.5rem' },
+                }}
+              >
+                {category.category}
+              </Typography>
+              
+              <Box 
+                sx={{ 
+                  display: 'grid',
+                  gridTemplateColumns: { 
+                    xs: 'repeat(2, 1fr)', 
+                    sm: 'repeat(3, 1fr)', 
+                    md: 'repeat(4, 1fr)',
+                    lg: 'repeat(5, 1fr)'
+                  },
+                  gap: 3,
+                  justifyItems: 'center',
+                }}
+              >
+                {category.items.map((skill, skillIndex) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: (idx * 0.1) + (skillIndex * 0.05), duration: 0.3 }}
                     style={{
-                      width: 48,
-                      height: 48,
-                      marginBottom: 8,
-                      transition: 'transform 0.3s',
-                    }}
-                    onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
-                    onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
-                  />
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: activeCategory === idx ? 'var(--white, #f5f5f5)' : 'var(--gray, #616161)',
-                      transition: 'color 0.3s',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      width: '100%',
+                      maxWidth: '100px',
                     }}
                   >
-                    {skill.name}
-                  </Typography>
-                </Box>
-              ))}
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      transition={{ duration: 0.2 }}
+                      style={{
+                        fontSize: '2.5rem',
+                        marginBottom: '0.5rem',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {skill.logo}
+                    </motion.div>
+                    
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: activeCategory === idx ? 'var(--white, #f5f5f5)' : 'var(--gray, #616161)',
+                        transition: 'color 0.3s',
+                        fontWeight: 500,
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        mb: 1,
+                      }}
+                    >
+                      {skill.name}
+                    </Typography>
+
+                    {/* Proficiency Bar */}
+                    <Box sx={{ width: '100%', mb: 1 }}>
+                      <Box
+                        sx={{
+                          width: '100%',
+                          height: '4px',
+                          bgcolor: 'rgba(97, 97, 97, 0.3)',
+                          borderRadius: '2px',
+                          overflow: 'hidden',
+                        }}
+                      >
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${skill.proficiency}%` }}
+                          transition={{ 
+                            delay: (idx * 0.2) + (skillIndex * 0.1), 
+                            duration: 1, 
+                            ease: "easeOut" 
+                          }}
+                          style={{
+                            height: '100%',
+                            background: activeCategory === idx 
+                              ? 'linear-gradient(90deg, var(--blue), var(--purple))' 
+                              : 'var(--gray)',
+                            transition: 'background 0.3s ease',
+                          }}
+                        />
+                      </Box>
+                    </Box>
+
+                    <Typography
+                      sx={{
+                        color: activeCategory === idx ? 'var(--blue, #00bcd4)' : 'var(--gray, #616161)',
+                        fontSize: '0.7rem',
+                        fontWeight: 600,
+                        transition: 'color 0.3s',
+                      }}
+                    >
+                      {skill.proficiency}%
+                    </Typography>
+                  </motion.div>
+                ))}
+              </Box>
             </Box>
-          </Box>
+          </motion.div>
         ))}
       </Box>
     </ThemeProvider>
