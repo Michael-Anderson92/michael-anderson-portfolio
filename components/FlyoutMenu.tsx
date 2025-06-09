@@ -10,8 +10,10 @@ interface NavigationProps {
 
 export default function HybridNavigation({ setCurrentView, currentView }: NavigationProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
@@ -29,10 +31,15 @@ export default function HybridNavigation({ setCurrentView, currentView }: Naviga
     setCurrentView(view);
   };
 
+  // Prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
+
   if (!isMobile) {
     // Desktop: Always visible vertical menu - Enlarged for better presence
     return (
-      <div className="fixed left-8 z-50" style={{ top: '140px' }}>
+      <div className="fixed left-8 z-50" style={{ top: '120px' }}>
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
@@ -90,9 +97,14 @@ export default function HybridNavigation({ setCurrentView, currentView }: Naviga
     );
   }
 
-  // Mobile: Bottom app bar
+  // Mobile: Bottom app bar - More robust styling
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50">
+    <div 
+      className="fixed bottom-0 left-0 right-0 z-50"
+      style={{
+        paddingBottom: 'env(safe-area-inset-bottom, 0px)'
+      }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -102,9 +114,10 @@ export default function HybridNavigation({ setCurrentView, currentView }: Naviga
           background: 'rgba(30, 30, 30, 0.95)',
           backdropFilter: 'blur(15px)',
           WebkitBackdropFilter: 'blur(15px)',
+          minHeight: '80px'
         }}
       >
-        <div className="flex items-center justify-around px-4 py-3 safe-area-inset-bottom">
+        <div className="flex items-center justify-around px-4 py-4">
           {menuItems.map((item, index) => (
             <motion.button
               key={item.view}
@@ -150,9 +163,6 @@ export default function HybridNavigation({ setCurrentView, currentView }: Naviga
             </motion.button>
           ))}
         </div>
-        
-        {/* Safe area padding for devices with home indicators */}
-        <div className="h-safe-area-inset-bottom" />
       </motion.div>
     </div>
   );
