@@ -39,6 +39,7 @@ const theme = createTheme({
 interface ProjectImage {
   url: string;
   caption: string;
+  title: string;
   type: 'logo' | 'architecture' | 'ui' | 'mockup' | 'dashboard';
 }
 
@@ -89,36 +90,37 @@ const projects: Project[] = [
       {
         url: '/projects/elaview/logo.png',
         caption: 'Elaview brand identity and visual design',
+        title:'Elaview Banner',
         type: 'logo'
       },
       {
         url: '/projects/elaview/architecture-1.png',
-        caption: 'Complete database architecture showing messaging, conversations, and user management systems',
+        caption: 'Database architecture showing messaging, conversations, and user management systems',
+        title:'Supabase Sample ERD',
         type: 'architecture'
       },
       {
         url: '/projects/elaview/architecture-2.png',
-        caption: 'Extended database schema with rental listings, visibility scoring, and geospatial features',
+        title:'Sample Ad Space',
+        caption: 'Niche advertisement space featured on the application',
         type: 'architecture'
       },
       {
         url: '/projects/elaview/ui-1.png',
-        caption: 'Property owner dashboard showing active listings, earnings, and visibility scores',
+        title:'Dashboard UI',
+        caption: 'Dynamic dashboard display for a landlord',
         type: 'ui'
       },
       {
         url: '/projects/elaview/ui-2.png',
+        title:'Foot Traffic Analysis',
         caption: 'AI-powered visibility scoring system analyzing foot traffic, vehicle traffic, and location quality',
         type: 'ui'
       },
       {
-        url: '/projects/elaview/mockup-1.png',
-        caption: 'Billboard advertisement mockup showing potential ad placement',
-        type: 'mockup'
-      },
-      {
         url: '/projects/elaview/mockup-2.png',
-        caption: 'Painted wall advertisement demonstrating diverse ad space options',
+        title:'Featured Spaces',
+        caption: 'Listings page within the application',
         type: 'mockup'
       }
     ],
@@ -565,7 +567,7 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
                 mb: 1,
               }}
             >
-              {project?.title} - {image.type}
+              {image.title}
             </Typography>
             <Typography
               sx={{
@@ -573,7 +575,7 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
                 fontSize: '0.9rem',
               }}
             >
-              {image.caption}
+              {image.caption} 
             </Typography>
             
             {(project?.images?.length || 0) > 1 && (

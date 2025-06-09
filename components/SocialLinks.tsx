@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const socialLinks = [
   {
@@ -32,22 +33,63 @@ const socialLinks = [
   },
 ];
 
-export default function SocialLinks() {
+interface SocialLinksProps {
+  showLabels?: boolean;
+}
+
+export default function SocialLinks({ showLabels = false }: SocialLinksProps) {
+  if (showLabels) {
+    // Desktop layout with labels
+    return (
+      <div className="flex space-x-8">
+        {socialLinks.map(({ href, label, svg }, index) => (
+          <motion.a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={label}
+            className="flex flex-col items-center space-y-1 hover:scale-105 transition-all duration-200 group"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 + 0.3 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div 
+              className="text-2xl lg:text-3xl group-hover:scale-110 transition-transform duration-200"
+              style={{ color: 'var(--white)' }}
+            >
+              {svg}
+            </div>
+            <span 
+              className="text-sm lg:text-base font-medium group-hover:text-[var(--blue)] transition-colors duration-200"
+              style={{ color: 'var(--white)' }}
+            >
+              {label}
+            </span>
+          </motion.a>
+        ))}
+      </div>
+    );
+  }
+
+  // Mobile layout - original styling
   return (
     <nav className="flex justify-center gap-6 my-4 mx-auto">
-            {socialLinks.map(({ href, label, svg }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="transition-colors duration-200"
-                style={{ color: 'var(--white)' }}
-              >
-                {svg}
-              </a>
-            ))}
-          </nav>
+      {socialLinks.map(({ href, label, svg }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="transition-colors duration-200"
+          style={{ color: 'var(--white)' }}
+        >
+          {svg}
+        </a>
+      ))}
+    </nav>
   );
 }
