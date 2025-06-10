@@ -697,7 +697,7 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
                     </Typography>
                   </Box>
                   
-                  <Box sx={{ ml: 2 }}>
+                  <Box sx={{ ml: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5 }}>
                     <motion.div
                       animate={{ rotate: isExpanded ? 45 : 0 }}
                       transition={{ duration: 0.2 }}
@@ -708,6 +708,17 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
                         <ExpandMoreIcon sx={{ color: 'var(--gray, #616161)' }} />
                       )}
                     </motion.div>
+                    <Typography
+                      sx={{
+                        color: isExpanded ? 'var(--blue, #00bcd4)' : 'var(--gray, #616161)',
+                        fontSize: '0.75rem',
+                        fontWeight: 500,
+                        textAlign: 'center',
+                        lineHeight: 1,
+                      }}
+                    >
+                      {isExpanded ? 'Show less' : 'See details'}
+                    </Typography>
                   </Box>
                 </Box>
 
