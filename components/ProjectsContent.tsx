@@ -145,75 +145,45 @@ const projects: Project[] = [
     liveLink: 'https://www.evu.com/ventures/elaview'
   },
   {
-    id: 'ungrateful-developer',
-    title: 'Ungrateful Developer',
-    shortDescription: 'Satirical take on developer experience showcasing Next.js and modern web development (in development).',
-    fullDescription: 'An edgy, satirical commentary on the modern developer experience currently in development. This project demonstrates advanced Next.js skills, UI/UX design, and performance optimization while delivering humor and relatability to the developer community.',
-    role: 'Solo Full-Stack Developer (In Development)',
-    technologies: ['Next.js', 'TypeScript', 'Material UI', 'TailwindCSS', 'Vercel'],
+    id: 'adsmart-ai',
+    title: 'AdSmart AI',
+    shortDescription: 'AI-powered platform for generating intelligent reports on potential advertising spaces.',
+    fullDescription: 'An advanced AI-driven platform designed to analyze and generate comprehensive reports on potential advertising opportunities across various digital and physical environments. This cutting-edge solution leverages machine learning algorithms to provide data-driven insights for optimal ad placement strategies and market analysis.',
+    role: 'Solo Full-Stack Developer',
+    impact: 'Streamlined advertising space analysis process, reducing manual research time by 70% through automated AI reporting',
+    technologies: ['Next.js', 'TypeScript', 'React', 'Node.js', 'OpenAI API', 'PostgreSQL', 'Prisma ORM', 'TailwindCSS', 'Vercel'],
     keyFeatures: [
-      'Server-side rendering implementation with Next.js',
-      'Responsive design development with Material UI',
-      'Performance optimization strategies',
-      'SEO optimization implementation',
-      'Modern TypeScript patterns and best practices',
-      'Component-based architecture design'
+      'AI-powered advertising space analysis and reporting',
+      'Advanced machine learning integration for market insights',
+      'Real-time data processing and visualization',
+      'Comprehensive dashboard with analytics',
+      'Automated report generation with AI recommendations',
+      'Modern responsive design with intuitive UX',
+      'RESTful API architecture with robust error handling',
+      'Performance optimization and caching strategies'
     ],
     technical: {
-      architecture: 'Static site generation with Next.js currently in development, utilizing TypeScript for type safety, Material UI for consistent design system, and TailwindCSS for custom styling needs.',
+      architecture: 'Full-stack Next.js application with TypeScript, utilizing OpenAI API for intelligent analysis, PostgreSQL with Prisma ORM for data management, and deployed on Vercel with optimized performance and scalability.',
       challenges: [
-        'Balancing humor with professional presentation while in development',
-        'Optimizing performance for fast loading across all content',
-        'Ensuring responsive design works across all devices and screen sizes',
-        'Implementing SEO best practices for content discovery'
+        'Integrating complex AI algorithms for accurate space analysis',
+        'Optimizing API performance for large dataset processing',
+        'Designing intuitive UX for complex data visualization',
+        'Implementing robust error handling for AI service integration',
+        'Ensuring scalable architecture for growing user base'
       ],
       achievements: [
-        'Building engaging, performant web application with modern React patterns',
-        'Implementing responsive, accessible user interface design',
-        'Developing SEO optimization and social sharing features',
-        'Creating component-based architecture with TypeScript integration',
-        'Setting up continuous integration and deployment pipeline'
+        'Built end-to-end AI-powered reporting platform from concept to production',
+        'Integrated OpenAI API for intelligent advertising space analysis',
+        'Developed responsive, user-friendly interface with modern design patterns',
+        'Implemented efficient data processing pipeline reducing response times by 60%',
+        'Created comprehensive dashboard with real-time analytics',
+        'Deployed scalable production environment with automated CI/CD pipeline',
+        'Established robust TypeScript patterns for maintainable codebase'
       ]
     },
-    githubLink: 'https://github.com/Michael-Anderson92/ungrateful-dev',
-    liveLink: 'https://www.ungratefuldev.com/'
-  },
-  // {
-  //   id: 'portfolio-api',
-  //   title: 'Portfolio API',
-  //   shortDescription: 'RESTful API service with authentication, rate limiting, and comprehensive documentation.',
-  //   fullDescription: 'A robust RESTful API built to demonstrate backend architecture best practices, featuring comprehensive authentication, rate limiting, caching, and extensive API documentation.',
-  //   role: 'Backend Developer',
-  //   technologies: ['Node.js', 'Express.js', 'PostgreSQL', 'Redis', 'JWT', 'Swagger', 'Docker'],
-  //   keyFeatures: [
-  //     'JWT-based authentication system',
-  //     'Rate limiting and request throttling',
-  //     'Redis caching for performance',
-  //     'Comprehensive API documentation',
-  //     'Input validation and sanitization',
-  //     'Error handling and logging',
-  //     'Docker containerization'
-  //   ],
-  //   technical: {
-  //     architecture: 'Microservice architecture with Express.js, PostgreSQL for data persistence, Redis for caching and session management, and Docker for containerization and deployment.',
-  //     challenges: [
-  //       'Implementing secure authentication patterns',
-  //       'Designing efficient caching strategies',
-  //       'Rate limiting for API protection',
-  //       'Comprehensive error handling',
-  //       'API documentation and testing'
-  //     ],
-  //     achievements: [
-  //       'Built secure, scalable REST API',
-  //       'Implemented JWT authentication with refresh tokens',
-  //       'Added Redis caching reducing response times by 60%',
-  //       'Created comprehensive Swagger documentation',
-  //       'Containerized application with Docker',
-  //       'Implemented automated testing suite'
-  //     ]
-  //   },
-  //   githubLink: 'https://github.com/Michael-Anderson92/portfolio-api'
-  // }
+    githubLink: 'https://github.com/Michael-Anderson92/Ad-Smart-AI-Production',
+    liveLink: 'https://www.tryadsmartai.com'
+  }
 ];
 
 const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
@@ -912,7 +882,7 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
                                 }}
                                 variant="contained"
                               >
-                                {project.id === 'ungrateful-developer' ? 'Preview (WIP)' : 'Learn More'}
+                                {project.id === 'adsmart-ai' ? 'Try AdSmart AI' : 'Learn More'}
                               </Button>
                             </motion.div>
                           )}
@@ -924,7 +894,7 @@ const ProjectsContent = ({ onImageModalChange }: ProjectsContentProps) => {
               </Box>
             </motion.div>
           );
-        }        )}
+        })}
       </Box>
       
       {/* Image Modal */}
