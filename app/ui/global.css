@@ -1,7 +1,26 @@
+/**
+ * Global Styles for Michael Anderson Portfolio
+ *
+ * Organization:
+ * 1. Tailwind Directives
+ * 2. CSS Variables (for backward compatibility)
+ * 3. Base Styles (@layer base)
+ * 4. Component Styles (@layer components)
+ * 5. Utility Classes (@layer utilities)
+ */
+
+/* ========================================
+   TAILWIND DIRECTIVES
+   ======================================== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ========================================
+   CSS VARIABLES
+   These are kept for backward compatibility.
+   New code should use Tailwind colors (portfolio-*)
+   ======================================== */
 :root {
   --black: #1e1e1e;
   --blue: #00bcd4;
@@ -11,257 +30,176 @@
   --navy: #0a0a0a;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ========================================
+   BASE STYLES
+   Global element styles and resets
+   ======================================== */
+@layer base {
+  * {
+    @apply m-0 p-0 box-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  body {
+    @apply font-sans bg-portfolio-black text-portfolio-white overflow-x-hidden;
+  }
+
+  /* Image optimization */
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  /* Enhanced focus styles for accessibility */
+  button:focus,
+  a:focus,
+  input:focus,
+  textarea:focus {
+    @apply outline-2 outline-portfolio-blue outline-offset-2;
+  }
+
+  /* Smooth transitions for interactive elements */
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-portfolio-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-portfolio-blue rounded;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-portfolio-blue-light;
+  }
 }
 
-html {
-  scroll-behavior: smooth;
+/* ========================================
+   COMPONENT STYLES
+   Reusable component patterns
+   ======================================== */
+@layer components {
+  /* ===== GLASSMORPHISM EFFECTS ===== */
+  .glass {
+    @apply backdrop-blur-[10px] border border-white/10;
+    background: rgba(30, 30, 30, 0.85);
+  }
+
+  .glass-hover {
+    @apply backdrop-blur-[15px];
+    background: rgba(30, 30, 30, 0.95);
+  }
+
+  /* ===== CARD COMPONENTS ===== */
+  .card-base {
+    @apply relative p-6 rounded-card border border-portfolio-gray/30
+           backdrop-blur-[10px] transition-all duration-smooth cursor-pointer;
+    background: rgba(30, 30, 30, 0.85);
+  }
+
+  .card-active {
+    @apply border-2 border-portfolio-blue backdrop-blur-[15px] shadow-glow-lg;
+    background: rgba(30, 30, 30, 0.95);
+  }
+
+  .card-hover:hover {
+    @apply border-portfolio-blue/50 -translate-y-0.5 shadow-glow-xl;
+  }
+
+  /* ===== BUTTON COMPONENTS ===== */
+  /* Note: Prefer using the Button component from components/ui/atoms/button
+     These are kept for legacy support */
+  .btn-primary {
+    @apply bg-portfolio-blue text-white border-none rounded-lg px-6 py-3
+           font-semibold transition-all duration-smooth cursor-pointer;
+  }
+
+  .btn-primary:hover {
+    @apply bg-portfolio-blue-light -translate-y-px shadow-card;
+  }
+
+  .btn-outline {
+    @apply bg-transparent text-portfolio-blue border-2 border-portfolio-blue
+           rounded-lg px-6 py-3 font-semibold transition-all duration-smooth cursor-pointer;
+  }
+
+  .btn-outline:hover {
+    @apply -translate-y-px;
+    background: rgba(0, 188, 212, 0.1);
+  }
+
+  /* ===== LOADING SPINNER ===== */
+  .spinner {
+    @apply w-8 h-8 rounded-full animate-spin;
+    border: 2px solid rgba(0, 188, 212, 0.2);
+    border-top-color: var(--blue);
+  }
 }
 
-body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--black);
-  color: var(--white);
-  overflow-x: hidden;
-}
+/* ========================================
+   UTILITY CLASSES
+   Single-purpose helper classes
+   ======================================== */
+@layer utilities {
+  /* ===== TEXT UTILITIES ===== */
+  .text-primary {
+    @apply text-portfolio-blue;
+  }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
+  .text-secondary {
+    @apply text-portfolio-gray;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--black);
-}
+  .text-accent {
+    @apply text-portfolio-white;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--blue);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #4dd0e1;
-}
-
-/* Glassmorphism utility classes */
-.glass {
-  background: rgba(30, 30, 30, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-hover {
-  background: rgba(30, 30, 30, 0.95);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-}
-
-/* Animation classes */
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from { box-shadow: 0 0 20px rgba(0, 188, 212, 0.2); }
-  to { box-shadow: 0 0 30px rgba(0, 188, 212, 0.4); }
-}
-
-/* Enhanced card styles */
-.card-base {
-  position: relative;
-  padding: 1.5rem;
-  border-radius: 1rem;
-  border: 1px solid rgba(97, 97, 97, 0.3);
-  background: rgba(30, 30, 30, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.card-active {
-  border: 2px solid var(--blue);
-  background: rgba(30, 30, 30, 0.95);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
-}
-
-.card-hover:hover {
-  border-color: rgba(0, 188, 212, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 188, 212, 0.15);
-}
-
-/* Button styles */
-.btn-primary {
-  background: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-primary:hover {
-  background: #4dd0e1;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
-}
-
-.btn-outline {
-  background: transparent;
-  color: var(--blue);
-  border: 2px solid var(--blue);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.btn-outline:hover {
-  background: rgba(0, 188, 212, 0.1);
-  transform: translateY(-1px);
-}
-
-/* Text styles */
-.text-primary {
-  color: var(--blue);
-}
-
-.text-secondary {
-  color: var(--gray);
-}
-
-.text-accent {
-  color: var(--white);
-}
-
-/* Responsive typography */
-@media (max-width: 768px) {
+  /* ===== RESPONSIVE TYPOGRAPHY ===== */
+  /* Note: Consider using Tailwind's responsive prefixes instead (md:text-2xl) */
   .responsive-text-xl {
-    font-size: 1.25rem;
+    @apply text-xl md:text-2xl;
   }
-  
+
   .responsive-text-2xl {
-    font-size: 1.5rem;
+    @apply text-2xl md:text-3xl;
   }
-  
+
   .responsive-text-3xl {
-    font-size: 1.875rem;
+    @apply text-3xl md:text-4xl;
   }
-}
 
-@media (min-width: 769px) {
-  .responsive-text-xl {
-    font-size: 1.5rem;
-  }
-  
-  .responsive-text-2xl {
-    font-size: 2rem;
-  }
-  
-  .responsive-text-3xl {
-    font-size: 2.5rem;
-  }
-}
-
-/* Utility classes for consistent spacing */
-.section-padding {
-  padding: 2rem 1rem;
-}
-
-@media (min-width: 768px) {
+  /* ===== SPACING UTILITIES ===== */
   .section-padding {
-    padding: 3rem 2rem;
+    @apply px-4 py-8 md:px-8 md:py-12 lg:px-12 lg:py-16;
   }
+
+  /* ===== Z-INDEX UTILITIES ===== */
+  /* Z-index utilities are defined in tailwind.config.ts */
+  /* Use them directly: z-background, z-content, z-header, z-navigation, z-modal */
+
+  /* ===== ANIMATION UTILITIES ===== */
+  /* Animation utilities are defined in tailwind.config.ts */
+  /* Use them directly: animate-float, animate-glow, animate-spin, animate-shimmer */
 }
 
-@media (min-width: 1024px) {
-  .section-padding {
-    padding: 4rem 3rem;
-  }
-}
-
-/* Z-index utilities */
-.z-background {
-  z-index: 0;
-}
-
-.z-content {
-  z-index: 10;
-}
-
-.z-header {
-  z-index: 20;
-}
-
-.z-navigation {
-  z-index: 50;
-}
-
-.z-modal {
-  z-index: 9999;
-}
-
-/* Loading spinner */
-.spinner {
-  border: 2px solid rgba(0, 188, 212, 0.2);
-  border-top: 2px solid var(--blue);
-  border-radius: 50%;
-  width: 32px;
-  height: 32px;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Enhanced focus styles for accessibility */
-button:focus,
-a:focus,
-input:focus,
-textarea:focus {
-  outline: 2px solid var(--blue);
-  outline-offset: 2px;
-}
-
-/* Smooth transitions for all interactive elements */
-button,
-a,
-input,
-textarea,
-select {
-  transition: all 0.3s ease;
-}
-
-/* Image optimization */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-/* Print styles */
+/* ========================================
+   PRINT STYLES
+   ======================================== */
 @media print {
   .no-print {
-    display: none !important;
+    @apply hidden;
   }
 }

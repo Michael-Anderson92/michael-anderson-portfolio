@@ -16,6 +16,7 @@ import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
+import HeroSection from '@/components/HeroSection'; // Add this import
 
 const theme = createTheme({
   typography: {
@@ -61,7 +62,7 @@ export default function Page() {
           initial="hidden"
           animate="visible"
           exit="exit"
-          className="w-full relative z-20"
+          className="w-full relative z-header"
         >
           {currentView === 'skills' && <SkillsContent />}
           {currentView === 'projects' && (
@@ -78,18 +79,18 @@ export default function Page() {
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-[var(--black)] flex items-center justify-center">
-        <div className="animate-spin w-8 h-8 border-2 border-[var(--blue)] border-t-transparent rounded-full"></div>
+      <div className="min-h-screen bg-portfolio-black flex items-center justify-center">
+        <div className="spinner"></div>
       </div>
     );
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="min-h-screen bg-[var(--black)] relative overflow-x-hidden">
+      <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
         {/* Background Layer - Lowest Z-Index */}
-        <div className="fixed inset-0 z-0">
-          <Suspense fallback={<div className="w-full h-full bg-black" />}>
+        <div className="fixed inset-0 z-background">
+          <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
             <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
           </Suspense>
         </div>
@@ -98,19 +99,16 @@ export default function Page() {
         <Header />
 
         {/* Main Content Layer */}
-        <div className="relative z-10">
+        <div className="relative z-content">
           {/* Main Content */}
           <main className="relative">
-            <div className="container mx-auto px-4 py-8 lg:py-12 max-w-4xl">
-              <Suspense fallback={<div className="mx-auto w-full h-[600px] bg-black" />}>
-                {renderContent()}
-              </Suspense>
-            </div>
+            {/* Replace the section with HeroSection component */}
+            <HeroSection />
           </main>
 
           {/* Footer */}
-          <footer className="relative z-20" style={{ backgroundColor: 'var(--black)' }}>
-            <Suspense fallback={<div className="w-full h-32 bg-black" />}>
+          <footer className="relative z-header bg-portfolio-black">
+            <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
               <BottomNav />
             </Suspense>
           </footer>
@@ -119,21 +117,21 @@ export default function Page() {
         {/* Side Navigation - Highest Z-Index - Only show when not hidden */}
         <AnimatePresence>
           {!isMenuHidden && (
-            <motion.div 
-              className="fixed bottom-8 left-8 z-50"
+            <motion.div
+              className="fixed bottom-8 left-8 z-navigation"
               initial={{ opacity: 1, scale: 1 }}
-              exit={{ 
-                opacity: 0, 
+              exit={{
+                opacity: 0,
                 scale: 0.8,
                 transition: { duration: 0.2, ease: "easeInOut" }
               }}
-              animate={{ 
-                opacity: 1, 
+              animate={{
+                opacity: 1,
                 scale: 1,
                 transition: { duration: 0.2, ease: "easeInOut" }
               }}
             >
-              <FlyoutMenu currentView={currentView} setCurrentView={setCurrentView} />
+              {/* <FlyoutMenu currentView={currentView} setCurrentView={setCurrentView} /> */}
             </motion.div>
           )}
         </AnimatePresence>

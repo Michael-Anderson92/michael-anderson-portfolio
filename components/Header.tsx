@@ -1,15 +1,11 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import SocialLinks from './SocialLinks';
 
 export default function Header() {
   return (
-    <motion.header
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6 }}
+    <header
       className="sticky top-0 z-20 bg-[var(--black)] border-b border-[var(--gray)]/20 backdrop-blur-md"
       style={{
         backgroundColor: 'rgba(30, 30, 30, 0.95)',
@@ -58,6 +54,6 @@ export default function Header() {
           <SocialLinks showLabels={true} />
         </div>
       </div>
-    </motion.header>
+    </header>
   );
 }
