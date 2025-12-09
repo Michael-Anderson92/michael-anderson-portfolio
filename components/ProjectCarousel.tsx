@@ -8,34 +8,34 @@ const projects = [
     id: 1,
     title: 'Elaview',
     description: 'B2B advertising marketplace connecting advertisers with physical advertising space owners. Features escrow payments, proof verification, and automated payouts.',
-    logo: '📱',
-    link: 'https://elaview.com',
+    logo: '/projects/project1-3d.png',
+    link: 'https://www.elaview.com',
     tags: ['Next.js', 'tRPC', 'Prisma', 'Stripe'],
-    gradientFrom: '#00bcd4', // Portfolio Blue
+    gradientFrom: '#00bcd4',
     gradientTo: '#0891b2',
-    borderColor: '#eab308', // Yellow
+    borderColor: '#eab308',
   },
   {
     id: 2,
-    title: 'Analytics Dashboard',
-    description: 'Real-time analytics platform with interactive visualizations, custom reporting, and data export capabilities. Built for scale and performance.',
-    logo: '📊',
-    link: 'https://github.com/yourusername/analytics',
-    tags: ['Next.js', 'D3.js', 'PostgreSQL', 'Redis'],
-    gradientFrom: '#10b981', // Green
+    title: 'Calvary Chapel Fullerton',
+    description: 'Church website with event management, sermon archives, and community features. Built with Sanity CMS for easy content updates.',
+    logo: '/projects/project2-3d.png',
+    link: 'https://www.ccfullerton.com',
+    tags: ['Next.js', 'Sanity CMS', 'TypeScript', 'Tailwind'],
+    gradientFrom: '#10b981',
     gradientTo: '#059669',
-    borderColor: '#00bcd4', // Blue
+    borderColor: '#00bcd4',
   },
   {
     id: 3,
-    title: 'Task Manager Pro',
-    description: 'Collaborative task management system with real-time updates, team workspaces, and intelligent priority sorting.',
-    logo: '✅',
-    link: 'https://github.com/yourusername/taskmanager',
-    tags: ['React', 'TypeScript', 'Firebase', 'Tailwind'],
-    gradientFrom: '#eab308', // Yellow
+    title: 'AdSmart AI',
+    description: 'AI-powered marketing analytics tool providing intelligent insights, campaign optimization, and automated reporting for data-driven decisions.',
+    logo: '/projects/project3-3d.png',
+    link: 'https://www.tryadsmartai.com',
+    tags: ['AI/ML', 'Next.js', 'Python', 'Analytics'],
+    gradientFrom: '#eab308',
     gradientTo: '#ca8a04',
-    borderColor: '#10b981', // Green
+    borderColor: '#10b981',
   },
 ];
 
@@ -45,11 +45,8 @@ export default function ProjectCarousel() {
       {/* Section Title */}
       <div className="text-center mb-12">
         <h2 className="text-7xl md:text-7xl font-bold text-portfolio-white mb-2">
-          Recent Work
+          Showcase Projects
         </h2>
-        <p className="text-foreground-muted text-lg">
-          Building solutions that scale
-        </p>
       </div>
 
       {/* Cards Container */}

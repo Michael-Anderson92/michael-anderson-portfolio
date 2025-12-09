@@ -10,7 +10,6 @@ import '@fontsource/roboto/700.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import VerticalLinearStepper from '@/components/VerticalLinearStepper';
 import { BackgroundBeams } from '@/components/ui/background-beams';
-import FlyoutMenu from '@/components/FlyoutMenu';
 import BottomNav from '@/components/BottomNav';
 import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
@@ -113,7 +112,9 @@ export default function Page() {
         <div className="relative z-content">
           {/* Main Content */}
           <main className="relative">
-            <ProjectCarousel /> {/* Changed from PhilosophySection */}
+            <section h-screen>
+            <ProjectCarousel /> 
+            </section>
           </main>
 
           {/* Footer */}
@@ -141,7 +142,6 @@ export default function Page() {
                 transition: { duration: 0.2, ease: "easeInOut" }
               }}
             >
-              {/* <FlyoutMenu currentView={currentView} setCurrentView={setCurrentView} /> */}
             </motion.div>
           )}
         </AnimatePresence>
