@@ -16,7 +16,11 @@ import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
-import HeroSection from '@/components/HeroSection'; // Add this import
+import HeroSection from '@/components/HeroSection';
+
+// Import LiveDataStrip - Pick one!
+import LiveDataStrip from '@/components/LiveDataStrip'; // Blue-Purple
+// import LiveDataStrip from '@/components/LiveDataStrip-OrangePink'; // Orange-Pink
 
 const theme = createTheme({
   typography: {
@@ -95,14 +99,16 @@ export default function Page() {
           </Suspense>
         </div>
 
-        {/* Header - Outside of flex container for proper sticky behavior */}
+        {/* NEW: Live Data Strip - Above everything */}
+        <LiveDataStrip />
+
+        {/* Header */}
         <Header />
 
         {/* Main Content Layer */}
         <div className="relative z-content">
           {/* Main Content */}
           <main className="relative">
-            {/* Replace the section with HeroSection component */}
             <HeroSection />
           </main>
 
