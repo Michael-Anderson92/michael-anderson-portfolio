@@ -1,11 +1,11 @@
 {
   "private": true,
   "scripts": {
-    "build": "next build",
-    "dev": "next dev --turbopack",
-    "start": "next start",
+    "build": "node init && next build",
+    "dev": "node init && next dev --turbopack",
+    "start": "node init && next start",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "node init && storybook build"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -31,7 +31,7 @@
     "framer-motion": "^12.11.0",
     "gsap": "^3.14.1",
     "motion": "^12.10.0",
-    "next": "^15.1.6",
+    "next": "15.1.9",
     "next-auth": "^5.0.0-beta.25",
     "postcss": "8.5.1",
     "postgres": "^3.4.5",
