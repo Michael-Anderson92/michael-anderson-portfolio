@@ -17,10 +17,8 @@ import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
 import HeroSection from '@/components/HeroSection';
-
-// Import LiveDataStrip - Pick one!
-import LiveDataStrip from '@/components/LiveDataStrip'; // Blue-Purple
-// import LiveDataStrip from '@/components/LiveDataStrip-OrangePink'; // Orange-Pink
+import ProjectCarousel from '@/components/ProjectCarousel' // Changed from PhilosophySection
+import LiveDataStrip from '@/components/LiveDataStrip';
 
 const theme = createTheme({
   typography: {
@@ -46,13 +44,13 @@ export default function Page() {
   const renderContent = () => {
     const contentVariants = {
       hidden: { opacity: 0, y: 20 },
-      visible: { 
-        opacity: 1, 
+      visible: {
+        opacity: 1,
         y: 0,
-        transition: { duration: 0.6, ease: "easeOut" }
+        transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as const }
       },
-      exit: { 
-        opacity: 0, 
+      exit: {
+        opacity: 0,
         y: -20,
         transition: { duration: 0.3 }
       }
@@ -99,17 +97,23 @@ export default function Page() {
           </Suspense>
         </div>
 
-        {/* NEW: Live Data Strip - Above everything */}
-        <LiveDataStrip />
+        {/* First Screen Section - Exactly 100vh */}
+        <section className="h-screen flex flex-col relative z-content">
+          {/* Live Data Strip */}
+          <LiveDataStrip />
 
-        {/* Header */}
-        <Header />
+          {/* Header */}
+          <Header />
+
+          {/* Hero Section - Takes remaining space */}
+          <HeroSection />
+        </section>
 
         {/* Main Content Layer */}
         <div className="relative z-content">
           {/* Main Content */}
           <main className="relative">
-            <HeroSection />
+            <ProjectCarousel /> {/* Changed from PhilosophySection */}
           </main>
 
           {/* Footer */}
