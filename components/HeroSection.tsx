@@ -2,12 +2,16 @@
 
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroSection() {
   const simpleRef = useRef<HTMLSpanElement>(null);
   const dataDrivenRef = useRef<HTMLSpanElement>(null);
   const applicationsRef = useRef<HTMLSpanElement>(null);
   const scaleTextRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const header = document.querySelector('header');
@@ -69,7 +73,6 @@ export default function HeroSection() {
         duration: 0.8,
         ease: 'back.out(1.7)',
       }, '<')
-      // Pulse the glow
       .to(scaleTextRef.current, {
         textShadow: '0 0 30px rgba(0, 188, 212, 1), 0 0 60px rgba(0, 188, 212, 0.5)',
         duration: 0.5,
@@ -77,10 +80,30 @@ export default function HeroSection() {
         repeat: 1,
       });
 
+    // 3. ZOOM OUT EFFECT on scroll
+    if (sectionRef.current) {
+      gsap.to(sectionRef.current, {
+        scale: 0.8,
+        opacity: 0,
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1,
+        }
+      });
+    }
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, []);
 
   return (
-    <section className="flex-1 w-full px-4 py-12 md:py-16 flex items-center justify-center">
+    <section 
+      ref={sectionRef}
+      className="min-h-[75vh] w-full px-4 py-12 md:py-16 flex items-center justify-center"
+    >
       <div className="max-w-7xl mx-auto w-full">
         <h1 className="font-display text-portfolio-white text-5xl md:text-6xl lg:text-8xl text-center font-bold px-4 md:px-6 leading-snug tracking-tight">
           I build{" "}

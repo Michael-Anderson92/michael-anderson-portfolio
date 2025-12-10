@@ -15,8 +15,7 @@ import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
-import HeroSection from '@/components/HeroSection';
-import ProjectCarousel from '@/components/ProjectCarousel' // Changed from PhilosophySection
+import ScrollTransitionSections from '@/components/ScrollTransitionSections'; // NEW
 import LiveDataStrip from '@/components/LiveDataStrip';
 
 const theme = createTheme({
@@ -87,65 +86,37 @@ export default function Page() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
-        {/* Background Layer - Lowest Z-Index */}
-        <div className="fixed inset-0 z-background">
-          <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
-            <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
-          </Suspense>
-        </div>
-
-        {/* First Screen Section - Exactly 100vh */}
-        <section className="h-screen flex flex-col relative z-content">
-          {/* Live Data Strip */}
-          <LiveDataStrip />
-
-          {/* Header */}
-          <Header />
-
-          {/* Hero Section - Takes remaining space */}
-          <HeroSection />
-        </section>
-
-        {/* Main Content Layer */}
-        <div className="relative z-content">
-          {/* Main Content */}
-          <main className="relative">
-            <section h-screen>
-            <ProjectCarousel /> 
-            </section>
-          </main>
-
-          {/* Footer */}
-          <footer className="relative z-header bg-portfolio-black">
-            <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
-              <BottomNav />
-            </Suspense>
-          </footer>
-        </div>
-
-        {/* Side Navigation - Highest Z-Index - Only show when not hidden */}
-        <AnimatePresence>
-          {!isMenuHidden && (
-            <motion.div
-              className="fixed bottom-8 left-8 z-navigation"
-              initial={{ opacity: 1, scale: 1 }}
-              exit={{
-                opacity: 0,
-                scale: 0.8,
-                transition: { duration: 0.2, ease: "easeInOut" }
-              }}
-              animate={{
-                opacity: 1,
-                scale: 1,
-                transition: { duration: 0.2, ease: "easeInOut" }
-              }}
-            >
-            </motion.div>
-          )}
-        </AnimatePresence>
+  <ThemeProvider theme={theme}>
+    <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
+      {/* Background Layer */}
+      <div className="fixed inset-0 z-background">
+        <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
+          <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
+        </Suspense>
       </div>
-    </ThemeProvider>
-  );
+
+      {/* FIXED Live Data Strip - Always visible */}
+      <div className="fixed top-0 left-0 right-0 z-50">
+        <LiveDataStrip />
+      </div>
+
+      {/* FIXED Header - Always visible */}
+      <div className="fixed top-12 left-0 right-0 z-40">
+        <Header />
+      </div>
+
+      {/* Remove the spacer div completely */}
+
+      {/* Pinned Scroll Transition Section */}
+      <ScrollTransitionSections />
+
+      {/* Footer */}
+      <footer className="relative z-header bg-portfolio-black">
+        <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
+          <BottomNav />
+        </Suspense>
+      </footer>
+    </div>
+  </ThemeProvider>
+);
 }
