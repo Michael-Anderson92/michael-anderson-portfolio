@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useState, Suspense } from 'react';
+import { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -15,7 +15,7 @@ import Header from '@/components/Header';
 import SkillsContent from '@/components/SkillsContent';
 import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
-import ScrollTransitionSections from '@/components/ScrollTransitionSections'; // NEW
+import ScrollTransitionSections from '@/components/ScrollTransitionSections';
 import LiveDataStrip from '@/components/LiveDataStrip';
 
 const theme = createTheme({
@@ -35,8 +35,44 @@ export default function Page() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isMenuHidden, setIsMenuHidden] = useState(false);
 
-  React.useEffect(() => {
+  // First reset - as early as possible
+  useEffect(() => {
+    // Immediate scroll to top
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, []);
+
+  // Second reset - after component mount
+  useEffect(() => {
+    // Disable browser scroll restoration
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
+    // Force scroll again
+    window.scrollTo(0, 0);
+    
+    // Also force on window load
+    const handleLoad = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    window.addEventListener('load', handleLoad);
+    
+    // Set a timeout as backup
+    const timeoutId = setTimeout(() => {
+      window.scrollTo(0, 0);
+    }, 100);
+
     setIsLoaded(true);
+
+    return () => {
+      window.removeEventListener('load', handleLoad);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
   const renderContent = () => {
@@ -86,37 +122,36 @@ export default function Page() {
   }
 
   return (
-  <ThemeProvider theme={theme}>
-    <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
-      {/* Background Layer */}
-      <div className="fixed inset-0 z-background">
-        <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
-          <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
-        </Suspense>
+    <ThemeProvider theme={theme}>
+      <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
+        {/* Background Layer */}
+        <div className="fixed inset-0 z-background">
+          <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
+            <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
+          </Suspense>
+        </div>
+
+        {/* FIXED Live Data Strip */}
+        <div className="fixed top-0 left-0 right-0 z-50">
+          <LiveDataStrip />
+        </div>
+
+        {/* FIXED Header */}
+        <div className="fixed top-12 left-0 right-0 z-40">
+          <Header />
+        </div>
+
+        {/* Combined: Hero → Michael + Projects Transition */}
+        <ScrollTransitionSections />
+        {/* <WalkingMichaelSection /> */}
+
+        {/* Footer */}
+        {/* <footer className="relative z-header bg-portfolio-black">
+          <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
+            <BottomNav />
+          </Suspense>
+        </footer> */}
       </div>
-
-      {/* FIXED Live Data Strip - Always visible */}
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <LiveDataStrip />
-      </div>
-
-      {/* FIXED Header - Always visible */}
-      <div className="fixed top-12 left-0 right-0 z-40">
-        <Header />
-      </div>
-
-      {/* Remove the spacer div completely */}
-
-      {/* Pinned Scroll Transition Section */}
-      <ScrollTransitionSections />
-
-      {/* Footer */}
-      <footer className="relative z-header bg-portfolio-black">
-        <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
-          <BottomNav />
-        </Suspense>
-      </footer>
-    </div>
-  </ThemeProvider>
-);
+    </ThemeProvider>
+  );
 }
