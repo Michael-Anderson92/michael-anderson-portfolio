@@ -146,121 +146,120 @@ export default function ScrollTransitionSections() {
       {/* Michael + Bento Grid Section - Fades in */}
       <div 
         ref={michaelProjectsRef}
-        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-8"
+        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-8 pb-8"
       >
-        <div className="relative w-full h-full flex">
+        <div className="relative w-full h-full flex items-center justify-center gap-6">
           
-          {/* LEFT: Michael at bottom-center of left area */}
-          <div className="w-[30%] h-full flex items-end justify-center pb-4">
-            <div 
-              ref={michaelRef}
-              className="relative flex flex-col items-center"
+          {/* LEFT: Michael Container */}
+          <div 
+            ref={michaelRef}
+            className="w-[25%] h-[90%] bg-portfolio-black rounded-xl shadow-xl border border-border/30 px-8 py-12 flex flex-col items-center justify-center"
+          >
+            {/* Chat Bubble */}
+            <div
+              ref={chatBubbleRef}
+              className="relative mb-4 bg-white rounded-2xl p-4 shadow-2xl max-w-[260px]"
             >
-              {/* Chat Bubble */}
-              <div
-                ref={chatBubbleRef}
-                className="relative mb-4 ml-8 bg-white rounded-2xl p-4 shadow-2xl max-w-[260px]"
-              >
-                <p className="text-portfolio-black text-base font-medium text-center">
-                  Thanks for stopping by! 👋<br />
-                  Check out my work →
-                </p>
-                {/* Chat bubble tail */}
-                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[14px] border-t-white" />
-              </div>
+              <p className="text-portfolio-black text-base font-medium text-center">
+                Thanks for stopping by! 👋<br />
+                Check out my work →
+              </p>
+              {/* Chat bubble tail */}
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[14px] border-l-transparent border-r-[14px] border-r-transparent border-t-[14px] border-t-white" />
+            </div>
 
-              {/* Michael Image */}
-              <div className="relative w-72 h-[420px]">
-                <Image
-                  src="/michael/michael.png"
-                  alt="Michael Anderson"
-                  fill
-                  sizes="288px"
-                  className="object-contain mix-blend-screen"
-                  priority
-                />
-              </div>
+            {/* Michael Image */}
+            <div className="relative w-72 h-[350px]">
+              <Image
+                src="/michael/michael.png"
+                alt="Michael Anderson"
+                fill
+                sizes="288px"
+                className="object-contain mix-blend-screen"
+                priority
+              />
             </div>
           </div>
 
-          {/* RIGHT: Bento Grid (70% width) */}
-          <div className="w-[70%] h-full flex items-center justify-center">
-            <div ref={bentoGridRef} className="w-full max-w-4xl">
-              {/* Section Title */}
-              <div className="text-center mb-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-portfolio-white mb-2">
-                  Recent Work
-                </h2>
-                <p className="text-foreground-muted text-base">
-                  Building solutions that scale
-                </p>
-              </div>
+          {/* RIGHT: Bento Grid */}
+          <div 
+            ref={bentoGridRef} 
+            className="w-[70%] max-w-4xl h-[90%] bg-portfolio-black rounded-xl shadow-xl border border-border/30 px-12 py-12 flex flex-col justify-center"
+          >
+            {/* Section Title */}
+            <div className="text-center mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-portfolio-white mb-2">
+                Recent Work
+              </h2>
+              <p className="text-foreground-muted text-base">
+                Building solutions that scale
+              </p>
+            </div>
 
-              {/* Bento Grid - 5 columns */}
-              <div className="grid grid-cols-5 grid-rows-2 gap-4 auto-rows-[200px]">
-                {projects.map((project, index) => (
-                  <a
-                    key={project.id}
-                    href={project.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    ref={(el) => { cardsRef.current[index] = el; }}
-                    className={`
-                      group relative overflow-hidden rounded-xl
-                      bg-background-light/50 backdrop-blur-lg
-                      border border-border/30
-                      transition-all duration-300
-                      hover:border-portfolio-blue/50
-                      hover:-translate-y-1
-                      hover:shadow-lg hover:shadow-portfolio-blue/10
-                      ${project.size === 'large' ? 'col-span-3' : 'col-span-2'}
-                    `}
-                  >
-                    {/* Content */}
-                    <div className="relative h-full p-5 flex flex-col justify-between">
-                      {/* Top: Logo & Title */}
-                      <div>
-                        <div className="w-12 h-12 mb-3 relative">
-                          <Image
-                            src={project.logo}
-                            alt={project.title}
-                            fill
-                            className="object-contain"
-                          />
-                        </div>
-                        <h3 className="text-xl font-bold text-portfolio-white mb-1">
-                          {project.title}
-                        </h3>
-                        <p className="text-foreground-muted text-xs leading-relaxed line-clamp-2">
-                          {project.description}
-                        </p>
+            {/* Bento Grid - 5 columns */}
+            <div className="grid grid-cols-5 grid-rows-2 gap-4 auto-rows-[200px]">
+              {projects.map((project, index) => (
+                <a
+                  key={project.id}
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ref={(el) => { cardsRef.current[index] = el; }}
+                  className={`
+                    group relative overflow-hidden rounded-xl
+                    bg-background-light/50 backdrop-blur-lg
+                    border border-border/30
+                    transition-all duration-300
+                    hover:border-portfolio-blue/50
+                    hover:-translate-y-1
+                    hover:shadow-lg hover:shadow-portfolio-blue/10
+                    ${project.size === 'large' ? 'col-span-3' : 'col-span-2'}
+                  `}
+                >
+                  {/* Content */}
+                  <div className="relative h-full p-5 flex flex-col justify-between">
+                    {/* Top: Logo & Title */}
+                    <div>
+                      <div className="w-12 h-12 mb-3 relative">
+                        <Image
+                          src={project.logo}
+                          alt={project.title}
+                          fill
+                          className="object-contain"
+                        />
                       </div>
-
-                      {/* Bottom: Tags */}
-                      <div className="flex flex-wrap gap-1.5 mt-3">
-                        {project.tags.slice(0, 3).map((tag, idx) => (
-                          <span
-                            key={idx}
-                            className="px-2 py-0.5 text-xs font-medium rounded-full bg-portfolio-blue/10 text-portfolio-blue border border-portfolio-blue/20"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-
-                      {/* Hover Arrow */}
-                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <svg className="w-5 h-5 text-portfolio-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
-                        </svg>
-                      </div>
-
-                      {/* Hover Glow Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-portfolio-blue/0 to-purple-600/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+                      <h3 className="text-xl font-bold text-portfolio-white mb-1">
+                        {project.title}
+                      </h3>
+                      <p className="text-foreground-muted text-xs leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
                     </div>
-                  </a>
-                ))}
-              </div>
+
+                    {/* Bottom: Tags */}
+                    <div className="flex flex-wrap gap-1.5 mt-3">
+                      {project.tags.slice(0, 3).map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-0.5 text-xs font-medium rounded-full bg-portfolio-blue/10 text-portfolio-blue border border-portfolio-blue/20"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Hover Arrow */}
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <svg className="w-5 h-5 text-portfolio-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                      </svg>
+                    </div>
+
+                    {/* Hover Glow Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-portfolio-blue/0 to-purple-600/0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
 
