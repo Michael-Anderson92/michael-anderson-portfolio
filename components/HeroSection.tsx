@@ -84,27 +84,21 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto w-full">
         <h1 className="font-display text-portfolio-white text-5xl md:text-6xl lg:text-8xl text-center font-bold px-4 md:px-6 leading-snug tracking-tight">
           I build{" "}
-          <span ref={simpleRef} className="inline-block text-portfolio-blue">
-            simple,
+          <span ref={simpleRef} className="inline-block italic  text-portfolio-blue">
+            scalable,
           </span>
           <br />
-          <span ref={dataDrivenRef} className="inline-block text-green-500">
-            data-driven
+          <span ref={dataDrivenRef} className="inline-block italic text-green-500">
+            full-stack
           </span>{" "}
           <span ref={applicationsRef} className="inline-block text-yellow">
             applications.
           </span>
         </h1>
-        <h2 
-          ref={scaleTextRef} 
-          className="text-right text-2xl md:text-3xl mt-6 md:mt-8 pr-4 md:pr-6 italic text-portfolio-blue"
-          style={{
-            textShadow: '0 0 10px rgba(0, 188, 212, 0.8)',
-          }}
-        >
-          (that scale!)
-        </h2>
       </div>
+      {/* <div className="absolute bottom-10 right-10 text-xl md:text-2xl lg:text-3xl font-semibold text-portfolio-white/70 hover:text-portfolio-white cursor-pointer select-none" ref={scaleTextRef}>
+        Learn more
+      </div> */}
     </section>
   );
 }
