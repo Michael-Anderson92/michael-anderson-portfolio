@@ -17,6 +17,7 @@ import AboutContent from '@/components/AboutContent';
 import ProjectsContent from '@/components/ProjectsContent';
 import ScrollTransitionSections from '@/components/ScrollTransitionSections';
 import LiveDataStrip from '@/components/LiveDataStrip';
+import Footer from '@/components/Footer';
 
 const theme = createTheme({
   typography: {
@@ -143,14 +144,9 @@ export default function Page() {
 
         {/* Combined: Hero → Michael + Projects Transition */}
         <ScrollTransitionSections />
-        {/* <WalkingMichaelSection /> */}
 
         {/* Footer */}
-        {/* <footer className="relative z-header bg-portfolio-black">
-          <Suspense fallback={<div className="w-full h-32 bg-portfolio-black" />}>
-            <BottomNav />
-          </Suspense>
-        </footer> */}
+        <Footer />
       </div>
     </ThemeProvider>
   );

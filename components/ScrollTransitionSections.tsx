@@ -1,12 +1,28 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
 import HeroSection from './HeroSection';
 
 gsap.registerPlugin(ScrollTrigger);
+
+// Custom hook for responsive breakpoint detection
+function useMediaQuery(query: string): boolean {
+  const [matches, setMatches] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    setMatches(media.matches);
+
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
+  }, [query]);
+
+  return matches;
+}
 
 const projects = [
   {
@@ -55,6 +71,10 @@ export default function ScrollTransitionSections() {
   const chatBubbleRef = useRef<HTMLDivElement>(null);
   const bentoGridRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  const mobileCardsRef = useRef<(HTMLAnchorElement | null)[]>([]);
+  
+  // Detect if we're on mobile (below md breakpoint - 768px)
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   useEffect(() => {
     if (!containerRef.current || !heroRef.current || !michaelProjectsRef.current) return;
@@ -64,71 +84,124 @@ export default function ScrollTransitionSections() {
     const michael = michaelRef.current;
     const chatBubble = chatBubbleRef.current;
     const cards = cardsRef.current.filter(Boolean);
+    const mobileCards = mobileCardsRef.current.filter(Boolean);
 
     // Set initial states
     gsap.set(michaelProjects, { opacity: 0 });
-    gsap.set(michael, { scale: 0.5, opacity: 0, y: 50 });
-    gsap.set(chatBubble, { scale: 0, opacity: 0 });
-    gsap.set(cards, { opacity: 0, y: 30, scale: 0.95 });
+    
+    if (isMobile) {
+      // Mobile: simpler animation - just fade in cards with stagger
+      gsap.set(mobileCards, { opacity: 0, y: 40 });
+      
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: '+=270%',
+          scrub: 0.5,
+          pin: true,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.5, 1], // Snap to: hero, mid-transition, projects
+            duration: { min: 0.2, max: 0.6 },
+            ease: 'power2.inOut',
+          },
+        }
+      });
 
-    // Create timeline for the transition
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: 'top top',
-        end: '+=250%',
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-      }
-    });
+      // Hero fades out (delayed start)
+      tl.to(hero, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, 0.3);
 
-    // PHASE 1: Hero zooms out and fades (0-0.8)
-    tl.to(hero, {
-      scale: 0.6,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.inOut',
-    }, 0);
+      // Projects section fades in
+      tl.to(michaelProjects, {
+        opacity: 1,
+        duration: 0.3,
+        ease: 'power2.out',
+      }, 0.9);
 
-    // PHASE 2: Michael + Projects section appears (1.0+)
-    tl.to(michaelProjects, {
-      opacity: 1,
-      duration: 0.3,
-      ease: 'power2.out',
-    }, 1.0);
+      // Cards stagger in
+      tl.to(mobileCards, {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: 'power3.out',
+      }, 1.0);
 
-    // Michael zooms in from small
-    tl.to(michael, {
-      scale: 1,
-      opacity: 1,
-      y: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    }, 1.0);
+    } else {
+      // Desktop: full animation with Michael
+      gsap.set(michael, { scale: 0.5, opacity: 0, y: 50 });
+      gsap.set(chatBubble, { scale: 0, opacity: 0 });
+      gsap.set(cards, { opacity: 0, y: 30, scale: 0.95 });
 
-    // Chat bubble appears
-    tl.to(chatBubble, {
-      scale: 1,
-      opacity: 1,
-      duration: 0.3,
-      ease: 'back.out(2)',
-    }, 1.3);
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: '+=300%',
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          snap: {
+            snapTo: [0, 0.5, 1], // Snap to: hero, mid-transition, projects
+            duration: { min: 0.2, max: 0.6 },
+            ease: 'power2.inOut',
+          },
+        }
+      });
 
-    // Bento grid cards stagger in
-    tl.to(cards, {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      duration: 0.4,
-      stagger: 0.1,
-      ease: 'power3.out',
-    }, 1.2);
+      // PHASE 1: Hero zooms out and fades (delayed start, 0.2-0.7)
+      tl.to(hero, {
+        scale: 0.6,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      }, 0.2);
+
+      // PHASE 2: Michael + Projects section appears (0.8+)
+      tl.to(michaelProjects, {
+        opacity: 1,
+        duration: 0.2,
+        ease: 'power2.out',
+      }, 0.8);
+
+      // Michael zooms in from small
+      tl.to(michael, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+      }, 0.8);
+
+      // Chat bubble appears
+      tl.to(chatBubble, {
+        scale: 1,
+        opacity: 1,
+        duration: 0.2,
+        ease: 'back.out(2)',
+      }, 1.0);
+
+      // Bento grid cards stagger in
+      tl.to(cards, {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.3,
+        stagger: 0.08,
+        ease: 'power3.out',
+      }, 0.95);
+    }
 
     return () => {
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <div 
@@ -138,7 +211,7 @@ export default function ScrollTransitionSections() {
       {/* Hero Section - Fades out */}
       <div 
         ref={heroRef}
-        className="absolute inset-0 w-full h-full flex items-center justify-center pt-[calc(3rem+80px)]"
+        className="absolute inset-0 w-full h-full flex items-center justify-center pt-[calc(3rem+80px)] will-change-transform transform-gpu backface-hidden"
       >
         <HeroSection />
       </div>
@@ -146,19 +219,20 @@ export default function ScrollTransitionSections() {
       {/* Michael + Bento Grid Section - Fades in */}
       <div 
         ref={michaelProjectsRef}
-        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-8 pb-8"
+        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-4 md:px-8 pb-8"
       >
-        <div className="relative w-full h-full flex items-center justify-center gap-6">
+        {/* Desktop Layout */}
+        <div className="hidden md:flex relative w-full h-full items-center justify-center gap-6">
           
           {/* LEFT: Michael Container */}
           <div 
             ref={michaelRef}
-            className="w-[25%] h-[90%] bg-portfolio-black rounded-xl shadow-xl border border-border/30 px-8 py-12 flex flex-col items-center justify-center"
+            className="w-[25%] h-[90%] bg-portfolio-black rounded-xl shadow-xl border border-border/30 px-8 py-12 flex flex-col items-center justify-center will-change-transform transform-gpu backface-hidden"
           >
             {/* Chat Bubble */}
             <div
               ref={chatBubbleRef}
-              className="relative mb-4 bg-white rounded-2xl p-4 shadow-2xl max-w-[260px]"
+              className="relative mb-4 bg-white rounded-2xl p-4 shadow-2xl max-w-[260px] will-change-transform transform-gpu backface-hidden"
             >
               <p className="text-portfolio-black text-base font-medium text-center">
                 Thanks for stopping by! 👋<br />
@@ -213,6 +287,7 @@ export default function ScrollTransitionSections() {
                     hover:border-portfolio-blue/50
                     hover:-translate-y-1
                     hover:shadow-lg hover:shadow-portfolio-blue/10
+                    will-change-transform transform-gpu backface-hidden
                     ${project.size === 'large' ? 'col-span-3' : 'col-span-2'}
                   `}
                 >
@@ -263,6 +338,77 @@ export default function ScrollTransitionSections() {
             </div>
           </div>
 
+        </div>
+
+        {/* Mobile Layout - Stackable Cards */}
+        <div className="flex md:hidden flex-col w-full min-h-full pt-20">
+          {/* Section Header */}
+          <div className="text-center mb-6 px-2">
+            <h2 className="text-3xl sm:text-4xl font-bold text-portfolio-white mb-2">
+              Recent Projects
+            </h2>
+            <p className="text-foreground-muted text-sm sm:text-base">
+              Building solutions that scale
+            </p>
+          </div>
+
+          {/* Stackable Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4 pb-8">
+            {projects.map((project, index) => (
+              <a
+                key={project.id}
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                ref={(el) => { mobileCardsRef.current[index] = el; }}
+                className="group relative overflow-hidden rounded-xl bg-portfolio-black/80 backdrop-blur-lg border border-border/30 transition-all duration-300 hover:border-portfolio-blue/50 hover:shadow-lg hover:shadow-portfolio-blue/10 will-change-transform transform-gpu backface-hidden"
+              >
+                <div className="relative p-5 flex flex-col">
+                  {/* Logo & Title Row */}
+                  <div className="flex items-start gap-4 mb-3">
+                    <div className="w-14 h-14 relative flex-shrink-0">
+                      <Image
+                        src={project.logo}
+                        alt={project.title}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-bold text-portfolio-white mb-1">
+                        {project.title}
+                      </h3>
+                      <p className="text-foreground-muted text-sm leading-relaxed line-clamp-2">
+                        {project.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.slice(0, 3).map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 text-xs font-medium rounded-full bg-portfolio-blue/10 text-portfolio-blue border border-portfolio-blue/20"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Arrow Icon */}
+                  <div className="absolute top-4 right-4">
+                    <svg className="w-5 h-5 text-portfolio-blue/50 group-hover:text-portfolio-blue transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 17L17 7M17 7H7M17 7V17" />
+                    </svg>
+                  </div>
+
+                  {/* Hover Glow Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-portfolio-blue/0 to-purple-600/0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>

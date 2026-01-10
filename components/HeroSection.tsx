@@ -8,6 +8,7 @@ export default function HeroSection() {
   const dataDrivenRef = useRef<HTMLSpanElement>(null);
   const applicationsRef = useRef<HTMLSpanElement>(null);
   const scaleTextRef = useRef<HTMLHeadingElement>(null);
+  const learnMoreRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const header = document.querySelector('header');
@@ -24,6 +25,7 @@ export default function HeroSection() {
     gsap.set(dataDrivenRef.current, { opacity: 0, scale: 0.5 });
     gsap.set(applicationsRef.current, { opacity: 0, y: 50 });
     gsap.set(scaleTextRef.current, { opacity: 0, scale: 0.5 });
+    gsap.set(learnMoreRef.current, { opacity: 0, y: -20 });
 
     // CREATE TIMELINE WITH LONGER DELAY
     const masterTl = gsap.timeline({
@@ -51,7 +53,7 @@ export default function HeroSection() {
       ease: 'power3.out',
     }, '-=0.5');
 
-    // 2. THEN: Animate header (after hero completes)
+    // 2. THEN: Animate header AND learn more together (after hero completes)
     if (header) {
       masterTl.to(header, {
         y: 0,
@@ -60,6 +62,14 @@ export default function HeroSection() {
         ease: 'power3.out',
       }, '+=0');
     }
+
+    // Learn more animates at the same time as header
+    masterTl.to(learnMoreRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: 'power3.out',
+    }, '<');
 
     // 2b. Neon Glow Effect
     masterTl
@@ -95,6 +105,31 @@ export default function HeroSection() {
             applications.
           </span>
         </h1>
+
+        {/* Learn More Indicator */}
+        <div 
+          ref={learnMoreRef}
+          className="mt-20 md:mt-28 flex flex-col items-center gap-2 cursor-pointer group"
+        >
+          <span className="text-sm md:text-base font-medium text-portfolio-white/60 group-hover:text-portfolio-white transition-colors">
+            Learn more
+          </span>
+          <div className="animate-bounce">
+            <svg 
+              className="w-6 h-6 md:w-8 md:h-8 text-portfolio-blue" 
+              fill="none" 
+              stroke="currentColor" 
+              viewBox="0 0 24 24"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M19 14l-7 7m0 0l-7-7m7 7V3" 
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       {/* <div className="absolute bottom-10 right-10 text-xl md:text-2xl lg:text-3xl font-semibold text-portfolio-white/70 hover:text-portfolio-white cursor-pointer select-none" ref={scaleTextRef}>
         Learn more
