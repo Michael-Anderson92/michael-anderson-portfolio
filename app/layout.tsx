@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           `}
         </Script>
       </head>
-      <body className={montserrat.className}>
+      <body className={montserrat.className} suppressHydrationWarning>
         {children}
         <Analytics />
       </body>

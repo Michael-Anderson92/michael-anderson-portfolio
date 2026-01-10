@@ -79,6 +79,7 @@ export default function ScrollTransitionSections() {
   useEffect(() => {
     if (!containerRef.current || !heroRef.current || !michaelProjectsRef.current) return;
 
+    const container = containerRef.current;
     const hero = heroRef.current;
     const michaelProjects = michaelProjectsRef.current;
     const michael = michaelRef.current;
@@ -90,112 +91,81 @@ export default function ScrollTransitionSections() {
     gsap.set(michaelProjects, { opacity: 0 });
     
     if (isMobile) {
-      // Mobile: simpler animation - just fade in cards with stagger
       gsap.set(mobileCards, { opacity: 0, y: 40 });
-      
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=270%',
-          scrub: 0.5,
-          pin: true,
-          anticipatePin: 1,
-          snap: {
-            snapTo: [0, 0.5, 1], // Snap to: hero, mid-transition, projects
-            duration: { min: 0.2, max: 0.6 },
-            ease: 'power2.inOut',
-          },
-        }
-      });
-
-      // Hero fades out (delayed start)
-      tl.to(hero, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      }, 0.3);
-
-      // Projects section fades in
-      tl.to(michaelProjects, {
-        opacity: 1,
-        duration: 0.3,
-        ease: 'power2.out',
-      }, 0.9);
-
-      // Cards stagger in
-      tl.to(mobileCards, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        stagger: 0.08,
-        ease: 'power3.out',
-      }, 1.0);
-
     } else {
-      // Desktop: full animation with Michael
       gsap.set(michael, { scale: 0.5, opacity: 0, y: 50 });
       gsap.set(chatBubble, { scale: 0, opacity: 0 });
       gsap.set(cards, { opacity: 0, y: 30, scale: 0.95 });
+    }
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: 'top top',
-          end: '+=300%',
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          snap: {
-            snapTo: [0, 0.5, 1], // Snap to: hero, mid-transition, projects
-            duration: { min: 0.2, max: 0.6 },
-            ease: 'power2.inOut',
-          },
-        }
-      });
+    // Create the main transition timeline
+    const transitionTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: 'top top',
+        end: '+=150%', // Pin for 1.5 viewport heights worth of scroll
+        pin: true,
+        anticipatePin: 1,
+        scrub: 0.5, // Smooth scrub
+        snap: {
+          snapTo: [0, 1], // Snap to start or end only
+          duration: { min: 0.4, max: 0.8 },
+          ease: 'power2.inOut',
+        },
+      },
+    });
 
-      // PHASE 1: Hero zooms out and fades (delayed start, 0.2-0.7)
-      tl.to(hero, {
-        scale: 0.6,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.inOut',
-      }, 0.2);
+    // PHASE 1: Hero fades out
+    transitionTl.to(hero, {
+      scale: 0.85,
+      opacity: 0,
+      duration: 0.6,
+      ease: 'power2.inOut',
+    });
 
-      // PHASE 2: Michael + Projects section appears (0.8+)
-      tl.to(michaelProjects, {
+    // PHASE 2: Projects section fades in
+    transitionTl.to(michaelProjects, {
+      opacity: 1,
+      duration: 0.5,
+      ease: 'power2.out',
+    }, '-=0.1');
+
+    if (isMobile) {
+      // Mobile: Cards stagger in
+      transitionTl.to(mobileCards, {
         opacity: 1,
-        duration: 0.2,
-        ease: 'power2.out',
-      }, 0.8);
-
-      // Michael zooms in from small
-      tl.to(michael, {
+        y: 0,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power3.out',
+      }, '-=0.2');
+    } else {
+      // Desktop: Michael zooms in
+      transitionTl.to(michael, {
         scale: 1,
         opacity: 1,
         y: 0,
-        duration: 0.4,
+        duration: 0.5,
         ease: 'power2.out',
-      }, 0.8);
+      }, '-=0.3');
 
       // Chat bubble appears
-      tl.to(chatBubble, {
+      transitionTl.to(chatBubble, {
         scale: 1,
         opacity: 1,
-        duration: 0.2,
+        duration: 0.4,
         ease: 'back.out(2)',
-      }, 1.0);
+      }, '-=0.2');
 
       // Bento grid cards stagger in
-      tl.to(cards, {
+      transitionTl.to(cards, {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 0.3,
+        duration: 0.5,
         stagger: 0.08,
         ease: 'power3.out',
-      }, 0.95);
+      }, '-=0.3');
     }
 
     return () => {
@@ -219,7 +189,7 @@ export default function ScrollTransitionSections() {
       {/* Michael + Bento Grid Section - Fades in */}
       <div 
         ref={michaelProjectsRef}
-        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-4 md:px-8 pb-8"
+        className="absolute inset-0 w-full h-full pt-[calc(3rem+80px)] px-4 md:px-8 pb-8 opacity-0"
       >
         {/* Desktop Layout */}
         <div className="hidden md:flex relative w-full h-full items-center justify-center gap-6">

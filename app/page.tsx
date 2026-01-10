@@ -1,23 +1,22 @@
 'use client';
 
 import * as React from 'react';
-import { useState, Suspense, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, Suspense, useEffect, useRef } from 'react';
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import VerticalLinearStepper from '@/components/VerticalLinearStepper';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { BackgroundBeams } from '@/components/ui/background-beams';
-import BottomNav from '@/components/BottomNav';
 import Header from '@/components/Header';
-import SkillsContent from '@/components/SkillsContent';
-import AboutContent from '@/components/AboutContent';
-import ProjectsContent from '@/components/ProjectsContent';
-import ScrollTransitionSections from '@/components/ScrollTransitionSections';
 import LiveDataStrip from '@/components/LiveDataStrip';
+import HeroWrapper from '@/components/HeroWrapper';
+import MainContentSection from '@/components/MainContentSection';
 import Footer from '@/components/Footer';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const theme = createTheme({
   typography: {
@@ -32,9 +31,9 @@ const theme = createTheme({
 });
 
 export default function Page() {
-  const [currentView, setCurrentView] = useState('home');
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isMenuHidden, setIsMenuHidden] = useState(false);
+  const navRef = useRef<HTMLDivElement>(null);
+  const mainContentRef = useRef<HTMLDivElement>(null);
 
   // First reset - as early as possible
   useEffect(() => {
@@ -76,43 +75,35 @@ export default function Page() {
     };
   }, []);
 
-  const renderContent = () => {
-    const contentVariants = {
-      hidden: { opacity: 0, y: 20 },
-      visible: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as const }
-      },
-      exit: {
-        opacity: 0,
-        y: -20,
-        transition: { duration: 0.3 }
-      }
-    };
+  // Nav fade out animation when reaching white section
+  useEffect(() => {
+    if (!isLoaded || !navRef.current || !mainContentRef.current) return;
 
-    return (
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentView}
-          variants={contentVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          className="w-full relative z-header"
-        >
-          {currentView === 'skills' && <SkillsContent />}
-          {currentView === 'projects' && (
-            <ProjectsContent 
-              onImageModalChange={setIsMenuHidden}
-            />
-          )}
-          {currentView === 'about' && <AboutContent />}
-          {currentView === 'home' && <VerticalLinearStepper />}
-        </motion.div>
-      </AnimatePresence>
-    );
-  };
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+      
+      const ctx = gsap.context(() => {
+        gsap.to(navRef.current, {
+          opacity: 0,
+          y: -30,
+          pointerEvents: 'none',
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: mainContentRef.current,
+            start: 'top bottom',
+            end: 'top 60%',
+            scrub: 0.3,
+            // markers: true, // Uncomment to debug
+          },
+        });
+      });
+
+      return () => ctx.revert();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [isLoaded]);
 
   if (!isLoaded) {
     return (
@@ -125,25 +116,28 @@ export default function Page() {
   return (
     <ThemeProvider theme={theme}>
       <div className="min-h-screen bg-portfolio-black relative overflow-x-hidden">
-        {/* Background Layer */}
+        {/* Background Layer - Fixed behind everything */}
         <div className="fixed inset-0 z-background">
           <Suspense fallback={<div className="w-full h-full bg-portfolio-black" />}>
             <BackgroundBeams className="absolute top-0 left-0 w-full h-full" />
           </Suspense>
         </div>
 
-        {/* FIXED Live Data Strip */}
-        <div className="fixed top-0 left-0 right-0 z-50">
+        {/* Navigation Container - Fades out when reaching white section */}
+        <div ref={navRef} className="fixed top-0 left-0 right-0 z-50 will-change-transform">
+          {/* Live Data Strip */}
           <LiveDataStrip />
-        </div>
-
-        {/* FIXED Header */}
-        <div className="fixed top-12 left-0 right-0 z-40">
+          {/* Header */}
           <Header />
         </div>
 
-        {/* Combined: Hero → Michael + Projects Transition */}
-        <ScrollTransitionSections />
+        {/* Hero Section - Full viewport, fades on scroll */}
+        <HeroWrapper />
+
+        {/* Main Content Section - Scrolls up naturally over hero */}
+        <div ref={mainContentRef}>
+          <MainContentSection />
+        </div>
 
         {/* Footer */}
         <Footer />
