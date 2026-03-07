@@ -34,20 +34,20 @@ const projects: Project[] = [
   {
     id: 3,
     title: 'JobHead',
-    category: 'AI & Analytics',
-    description: 'AI-powered marketing analytics platform that optimizes ad campaigns using machine learning. Provides actionable insights and automated recommendations.',
+    category: 'Productivity',
+    description: 'A job application tracking tool to manage multiple applications, resume versions, and hiring progress all in one place. Stay organized throughout your job search.',
     image: '/projects/jobhead.png',
     link: 'https://tryadsmartai.com',
-    tags: ['AI/ML', 'Python', 'React', 'FastAPI'],
+    tags: ['Next.js', 'TypeScript', 'AG Grid'],
   },
   {
     id: 4,
     title: 'AdSmart AI',
-    category: 'Personal Site',
-    description: 'This website! A modern portfolio featuring smooth scroll animations, interactive elements, and a clean design system.',
+    category: 'AI & Analytics',
+    description: 'AI-powered marketing analytics tool that provides precise location-based insights to optimize out-of-home advertising campaigns and placement decisions.',
     image: '/projects/adsmart.png',
-    link: 'https://michaelanderson.dev',
-    tags: ['Next.js', 'GSAP', 'Tailwind', 'Framer Motion'],
+    link: 'https://www.tryadsmartai.com',
+    tags: ['AI/ML', 'Next.js', 'TypeScript', 'Geolocation'],
   },
 ];
 

@@ -13,8 +13,8 @@ export default function MainContentSection() {
         {/* First Section - Projects */}
         <MainContent1 />
         
-        {/* Second Section - Placeholder */}
-        <MainContent2 />
+        {/* Second Section - Placeholder
+        <MainContent2 /> */}
       </div>
     </div>
   );
