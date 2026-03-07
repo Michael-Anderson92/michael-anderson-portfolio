@@ -75,34 +75,37 @@ export default function Page() {
     };
   }, []);
 
-  // Nav fade out animation when reaching white section
+  // Nav fade in on load, then fade out when reaching white section
   useEffect(() => {
     if (!isLoaded || !navRef.current || !mainContentRef.current) return;
 
-    // Small delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-      
-      const ctx = gsap.context(() => {
-        gsap.to(navRef.current, {
-          opacity: 0,
-          y: -30,
-          pointerEvents: 'none',
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: mainContentRef.current,
-            start: 'top bottom',
-            end: 'top 60%',
-            scrub: 0.3,
-            // markers: true, // Uncomment to debug
-          },
-        });
+    const ctx = gsap.context(() => {
+      // First, animate nav in
+      gsap.to(navRef.current, {
+        opacity: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+        onComplete: () => {
+          // Then set up scroll trigger for fade out
+          ScrollTrigger.refresh();
+          
+          gsap.to(navRef.current, {
+            opacity: 0,
+            y: -30,
+            pointerEvents: 'none',
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: mainContentRef.current,
+              start: 'top bottom',
+              end: 'top 60%',
+              scrub: 0.3,
+            },
+          });
+        }
       });
+    });
 
-      return () => ctx.revert();
-    }, 100);
-
-    return () => clearTimeout(timer);
+    return () => ctx.revert();
   }, [isLoaded]);
 
   if (!isLoaded) {
@@ -124,7 +127,7 @@ export default function Page() {
         </div>
 
         {/* Navigation Container - Fades out when reaching white section */}
-        <div ref={navRef} className="fixed top-0 left-0 right-0 z-50 will-change-transform">
+        <div ref={navRef} className="fixed top-0 left-0 right-0 z-50 will-change-transform opacity-0">
           {/* Live Data Strip */}
           <LiveDataStrip />
           {/* Header */}

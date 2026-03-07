@@ -1,21 +1,20 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, memo } from 'react';
 
 // Mock data - replace with real API calls later
 const mockStats = [
+  {
+    icon: '📈',
+    label: 'S&P 500',
+    value: '$6,852.34',
+    trend: '↑ 2.3%'
+  },
   {
     icon: '👥',
     label: 'Portfolio Visitors',
     value: '1,247 this month',
     trend: '↑ 23%'
-  },
-  {
-    icon: '⚾',
-    label: 'Angels',
-    value: '63-99',
-    trend: 'Last: W 4-2'
   },
   {
     icon: '💻',
@@ -24,10 +23,10 @@ const mockStats = [
     trend: 'This month'
   },
   {
-    icon: '📈',
-    label: 'S&P 500',
-    value: '$6,852.34',
-    trend: '↑ 2.3%'
+    icon: '⚾',
+    label: 'Angels',
+    value: '63-99',
+    trend: 'Last: W 4-2'
   },
   {
     icon: '😄',
@@ -37,16 +36,24 @@ const mockStats = [
   }
 ];
 
-export default function LiveDataStrip() {
+function LiveDataStrip() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  // Prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % mockStats.length);
     }, 5000); // Rotate every 5 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [mounted]);
 
   const currentStat = mockStats[currentIndex];
 
@@ -68,15 +75,11 @@ export default function LiveDataStrip() {
         </span>
       </div>
 
-      {/* Rotating Stats */}
-      <AnimatePresence mode="wait">
-        <motion.div
+      {/* Rotating Stats - Using CSS transitions instead of Framer Motion */}
+      <div className="flex items-center gap-2 md:gap-3 text-white px-4">
+        <span 
           key={currentIndex}
-          initial={{ x: 100, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: -100, opacity: 0 }}
-          transition={{ duration: 0.5, ease: 'easeInOut' }}
-          className="flex items-center gap-2 md:gap-3 text-white px-4"
+          className="flex items-center gap-2 md:gap-3 animate-fade-in"
         >
           <span className="text-lg md:text-xl">{currentStat.icon}</span>
           <span className="text-xs md:text-sm font-medium hidden sm:inline">
@@ -84,22 +87,35 @@ export default function LiveDataStrip() {
           </span>
           <span className="text-xs md:text-sm font-bold">{currentStat.value}</span>
           <span className="text-xs opacity-90 hidden md:inline">{currentStat.trend}</span>
-        </motion.div>
-      </AnimatePresence>
+        </span>
+      </div>
 
       {/* Progress indicator dots */}
       <div className="absolute right-4 flex items-center gap-1">
         {mockStats.map((_, idx) => (
           <div
             key={idx}
-            className={`h-1.5 w-1.5 rounded-full transition-all ${
+            className={`h-1.5 rounded-full transition-all duration-300 ${
               idx === currentIndex 
                 ? 'bg-white w-4' 
-                : 'bg-white/40'
+                : 'bg-white/40 w-1.5'
             }`}
           />
         ))}
       </div>
+
+      {/* CSS for fade animation */}
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(-4px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
     </div>
   );
 }
+
+export default memo(LiveDataStrip);
